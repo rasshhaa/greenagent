@@ -1,0 +1,141 @@
+# 🌱 GreenAgent
+
+> *Not "does it work?" — but "will it hurt us 6 months from now?"*
+
+An AI agent that analyzes every GitLab merge request before merge and predicts its long-term **architectural impact**, **energy consumption growth**, **technical debt trajectory**, and **scalability ceiling** — then posts a scored report directly on the MR thread.
+
+Powered by **Groq** (Llama 3.3 70B) + **GitLab API**.
+
+---
+
+## Folder Structure
+
+```
+greenagent/
+├── src/
+│   ├── server.js      ← Express server, webhook receiver, REST API
+│   ├── analyzer.js    ← Groq integration — scores the diff
+│   ├── gitlab.js      ← GitLab API — fetch diff, post MR comment
+│   └── store.js       ← In-memory results store
+├── public/
+│   └── index.html     ← Single-file frontend: landing page + live dashboard
+├── .env.example       ← Environment variable template
+├── .gitignore
+├── package.json
+└── README.md
+```
+
+---
+
+## Quick Start
+
+### 1. Install
+
+```bash
+npm install
+cp .env.example .env
+```
+
+### 2. Fill in `.env`
+
+| Variable | Where to get it |
+|---|---|
+| `GROQ_API_KEY` | [console.groq.com](https://console.groq.com) → API Keys (free) |
+| `GITLAB_TOKEN` | GitLab → User Settings → Access Tokens → api scope |
+| `GITLAB_URL` | `https://gitlab.com` or your self-hosted URL |
+| `GITLAB_WEBHOOK_SECRET` | Any random string — paste into GitLab webhook settings |
+
+### 3. Start the server
+
+```bash
+npm start
+# → http://localhost:3000
+```
+
+### 4. Expose publicly (for webhook)
+
+```bash
+npx ngrok http 3000
+# Copy the https://xxxx.ngrok.io URL
+```
+
+### 5. Add GitLab Webhook
+
+Repo → **Settings → Webhooks → Add new webhook**
+
+```
+URL:     https://your-ngrok-url/webhook/gitlab
+Secret:  (your GITLAB_WEBHOOK_SECRET)
+Trigger: ✅ Merge request events
+```
+
+Click **Test → Merge request events** to verify. Then open or update any MR — GreenAgent fetches the diff, analyzes it with Groq, and posts a full sustainability report as a comment automatically.
+
+---
+
+## How It Works
+
+```
+Developer opens / updates MR
+         ↓
+GitLab sends POST → /webhook/gitlab
+         ↓
+GreenAgent fetches diff via GitLab API
+         ↓
+Diff sent to Groq (Llama 3.3 70B) with sustainability prompt
+         ↓
+Groq returns score (0-100) + 4-dimension breakdown + recommendations
+         ↓
+GreenAgent posts comment badge on the MR
+         ↓
+Dashboard updates automatically
+```
+
+---
+
+## API Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/webhook/gitlab` | Receives GitLab MR events |
+| `GET`  | `/api/analyses`   | List recent analyses |
+| `GET`  | `/api/stats`      | Aggregate stats |
+| `POST` | `/api/analyze`    | Manually trigger analysis |
+| `GET`  | `/api/health`     | Server health check |
+
+### Manual Trigger Example
+
+```bash
+curl -X POST http://localhost:3000/api/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"projectId": "mygroup/myrepo", "mrIid": 42}'
+```
+
+---
+
+## Score Guide
+
+| Score | Verdict | Meaning |
+|---|---|---|
+| 80–100 | ✅ Pass   | Clean, green, future-safe |
+| 65–79  | ⚠️ Review | Minor concerns |
+| 40–64  | ⚠️ Review | Moderate issues, refactor recommended |
+| 0–39   | 🚫 Block  | Significant sustainability risk |
+
+Thresholds configurable via `BLOCK_THRESHOLD` and `REVIEW_THRESHOLD` in `.env`.
+
+---
+
+## Deploy for Free
+
+**Railway:**
+```bash
+npm install -g @railway/cli
+railway login && railway init && railway up
+```
+
+Set env vars in the Railway dashboard, update your GitLab webhook URL.
+
+---
+
+Built for hackathon · Powered by Groq (Llama 3.3 70B) + GitLab API 🌱
