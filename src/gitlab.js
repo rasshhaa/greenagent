@@ -34,14 +34,22 @@ function getOAuthUrl() {
  */
 async function exchangeCodeForToken(code) {
   const base = process.env.GITLAB_URL || 'https://gitlab.com';
-  const { data } = await axios.post(`${base}/oauth/token`, {
+  console.log('[oauth] redirect_uri being sent:', process.env.GITLAB_OAUTH_REDIRECT_URI);
+  console.log('[oauth] client_id being sent:', process.env.GITLAB_OAUTH_CLIENT_ID?.slice(0, 10) + '...');
+  const payload = {
     client_id:     process.env.GITLAB_OAUTH_CLIENT_ID,
     client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
     code,
     grant_type:    'authorization_code',
     redirect_uri:  process.env.GITLAB_OAUTH_REDIRECT_URI
-  });
-  return data; // { access_token, token_type, refresh_token, scope, ... }
+  };
+  try {
+    const { data } = await axios.post(`${base}/oauth/token`, payload);
+    return data;
+  } catch (err) {
+    console.error('[oauth] token exchange failed:', err.response?.status, JSON.stringify(err.response?.data));
+    throw err;
+  }
 }
 
 /**

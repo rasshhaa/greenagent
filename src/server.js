@@ -15,6 +15,8 @@ const store                                                                 = re
 
 const app = express();
 
+app.set('trust proxy', 1); // required for Render/proxied deployments
+
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use((req, res, next) => {
@@ -22,7 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.static(path.join(__dirname, '../public')));
-app.use('/api', rateLimit({ windowMs: 60_000, max: 120 }));
+app.use('/api', rateLimit({ windowMs: 60_000, max: 120, validate: { xForwardedForHeader: false } }));
 
 // ─────────────────────────────────────────────────────────────
 // SSE — real-time push to dashboard
