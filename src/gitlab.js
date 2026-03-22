@@ -4,10 +4,16 @@ const axios = require('axios');
 // Accepts an optional token — used for per-user OAuth tokens.
 // Falls back to server-level GITLAB_TOKEN env var.
 function gl(token) {
+  const t = token || process.env.GITLAB_TOKEN;
+  // OAuth tokens (gloas-...) need Authorization: Bearer
+  // Personal access tokens (glpat-...) use PRIVATE-TOKEN header
+  const isOAuth = t && t.startsWith('gloas-');
   return axios.create({
     baseURL: `${process.env.GITLAB_URL || 'https://gitlab.com'}/api/v4`,
     headers: {
-      'PRIVATE-TOKEN': token || process.env.GITLAB_TOKEN,
+      ...(isOAuth
+        ? { 'Authorization': `Bearer ${t}` }
+        : { 'PRIVATE-TOKEN': t }),
       'Content-Type': 'application/json'
     },
     timeout: 20000
