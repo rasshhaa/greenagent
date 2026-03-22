@@ -1,0 +1,302 @@
+{
+  "analyses": [],
+  "repoAnalyses": [
+    {
+      "projectId": "80472719",
+      "projectName": "rashasidique/testproj",
+      "ref": "master",
+      "commitSha": "manual-1774132238097",
+      "fileCount": 12,
+      "score": 62,
+      "verdict": "review",
+      "summary": "The codebase has several areas of concern, including inefficient database queries, tight coupling between modules, and potential scalability issues. While the overall structure is well-organized, there are opportunities for improvement to reduce technical debt and increase maintainability.",
+      "dimensions": {
+        "energy": {
+          "score": 40,
+          "finding": "Repeated database queries and missing caching layers in models/orderModel.js and models/userModel.js",
+          "impact": "high"
+        },
+        "debt": {
+          "score": 60,
+          "finding": "Tight coupling between modules, such as services/userService.js and models/userModel.js",
+          "impact": "medium"
+        },
+        "scalability": {
+          "score": 50,
+          "finding": "Monolithic architecture and shared mutable state in models/db.js",
+          "impact": "medium"
+        },
+        "architecture": {
+          "score": 70,
+          "finding": "Overall structure is well-organized, but some modules have multiple responsibilities",
+          "impact": "low"
+        }
+      },
+      "hotspotFiles": [
+        {
+          "path": "models/orderModel.js",
+          "risk": "high",
+          "reason": "Repeated database queries and inefficient computation of order totals",
+          "suggestion": "Implement caching and optimize database queries"
+        },
+        {
+          "path": "models/userModel.js",
+          "risk": "medium",
+          "reason": "Tight coupling with other modules and potential scalability issues",
+          "suggestion": "Refactor to reduce coupling and improve scalability"
+        },
+        {
+          "path": "services/userService.js",
+          "risk": "medium",
+          "reason": "Tight coupling with models/userModel.js and potential scalability issues",
+          "suggestion": "Refactor to reduce coupling and improve scalability"
+        }
+      ],
+      "recommendations": [
+        {
+          "file": "models/orderModel.js",
+          "issue": "Repeated database queries",
+          "fix": "Implement caching using a library like Redis or Memcached"
+        },
+        {
+          "file": "models/userModel.js",
+          "issue": "Tight coupling with other modules",
+          "fix": "Refactor to use dependency injection and reduce coupling"
+        },
+        {
+          "file": "services/userService.js",
+          "issue": "Tight coupling with models/userModel.js",
+          "fix": "Refactor to use dependency injection and reduce coupling"
+        }
+      ],
+      "projection": "If left as-is, this codebase will likely experience significant performance issues and technical debt within 6 months, requiring substantial refactoring and optimization efforts. However, with targeted improvements to address the identified issues, the codebase can become more maintainable, scalable, and efficient.",
+      "dependencyGraph": {
+        "nodes": [
+          {
+            "id": "models/orderModel.js",
+            "label": "models/orderModel.js",
+            "layer": "model",
+            "status": "changed",
+            "connections": 6,
+            "inDegree": 4,
+            "outDegree": 2,
+            "size": 774,
+            "hsReason": "Repeated database queries and inefficient computation of order totals",
+            "hsSuggest": "Implement caching and optimize database queries"
+          },
+          {
+            "id": "models/userModel.js",
+            "label": "models/userModel.js",
+            "layer": "model",
+            "status": "affected",
+            "connections": 6,
+            "inDegree": 5,
+            "outDegree": 1,
+            "size": 745,
+            "hsReason": "Tight coupling with other modules and potential scalability issues",
+            "hsSuggest": "Refactor to reduce coupling and improve scalability"
+          },
+          {
+            "id": "services/reportService.js",
+            "label": "services/reportService.js",
+            "layer": "service",
+            "status": "stable",
+            "connections": 5,
+            "inDegree": 2,
+            "outDegree": 3,
+            "size": 1041
+          },
+          {
+            "id": "routes/userRoutes.js",
+            "label": "routes/userRoutes.js",
+            "layer": "route",
+            "status": "stable",
+            "connections": 4,
+            "inDegree": 1,
+            "outDegree": 3,
+            "size": 753
+          },
+          {
+            "id": "services/userService.js",
+            "label": "services/userService.js",
+            "layer": "service",
+            "status": "affected",
+            "connections": 4,
+            "inDegree": 1,
+            "outDegree": 3,
+            "size": 518,
+            "hsReason": "Tight coupling with models/userModel.js and potential scalability issues",
+            "hsSuggest": "Refactor to reduce coupling and improve scalability"
+          },
+          {
+            "id": "models/db.js",
+            "label": "models/db.js",
+            "layer": "model",
+            "status": "affected",
+            "connections": 3,
+            "inDegree": 3,
+            "outDegree": 0,
+            "size": 361
+          },
+          {
+            "id": "app.js",
+            "label": "app.js",
+            "layer": "module",
+            "status": "stable",
+            "connections": 2,
+            "inDegree": 0,
+            "outDegree": 2,
+            "size": 355
+          },
+          {
+            "id": "models/productModel.js",
+            "label": "models/productModel.js",
+            "layer": "model",
+            "status": "stable",
+            "connections": 2,
+            "inDegree": 1,
+            "outDegree": 1,
+            "size": 284
+          },
+          {
+            "id": "routes/reportRoutes.js",
+            "label": "routes/reportRoutes.js",
+            "layer": "route",
+            "status": "stable",
+            "connections": 2,
+            "inDegree": 1,
+            "outDegree": 1,
+            "size": 442
+          },
+          {
+            "id": "utils/helpers.js",
+            "label": "utils/helpers.js",
+            "layer": "util",
+            "status": "stable",
+            "connections": 2,
+            "inDegree": 0,
+            "outDegree": 2,
+            "size": 581
+          },
+          {
+            "id": "README.md",
+            "label": "README.md",
+            "layer": "doc",
+            "status": "stable",
+            "connections": 0,
+            "inDegree": 0,
+            "outDegree": 0,
+            "size": 78
+          },
+          {
+            "id": "package.json",
+            "label": "package.json",
+            "layer": "module",
+            "status": "stable",
+            "connections": 0,
+            "inDegree": 0,
+            "outDegree": 0,
+            "size": 145
+          }
+        ],
+        "edges": [
+          {
+            "source": "app.js",
+            "target": "routes/userRoutes.js",
+            "weight": 0.8
+          },
+          {
+            "source": "app.js",
+            "target": "routes/reportRoutes.js",
+            "weight": 0.8
+          },
+          {
+            "source": "models/orderModel.js",
+            "target": "models/db.js",
+            "weight": 0.8
+          },
+          {
+            "source": "models/orderModel.js",
+            "target": "models/userModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "models/productModel.js",
+            "target": "models/db.js",
+            "weight": 0.8
+          },
+          {
+            "source": "models/userModel.js",
+            "target": "models/db.js",
+            "weight": 0.8
+          },
+          {
+            "source": "routes/reportRoutes.js",
+            "target": "services/reportService.js",
+            "weight": 0.8
+          },
+          {
+            "source": "routes/userRoutes.js",
+            "target": "models/userModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "routes/userRoutes.js",
+            "target": "services/userService.js",
+            "weight": 0.8
+          },
+          {
+            "source": "routes/userRoutes.js",
+            "target": "models/orderModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "services/reportService.js",
+            "target": "models/userModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "services/reportService.js",
+            "target": "models/orderModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "services/reportService.js",
+            "target": "models/productModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "services/userService.js",
+            "target": "models/userModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "services/userService.js",
+            "target": "models/orderModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "services/userService.js",
+            "target": "services/reportService.js",
+            "weight": 0.8
+          },
+          {
+            "source": "utils/helpers.js",
+            "target": "models/userModel.js",
+            "weight": 0.8
+          },
+          {
+            "source": "utils/helpers.js",
+            "target": "models/orderModel.js",
+            "weight": 0.8
+          }
+        ]
+      },
+      "repoName": "rashasidique/testproj",
+      "id": "repo-80472719-1774132242762",
+      "kind": "repo",
+      "analyzedAt": "2026-03-21T22:30:42.762Z"
+    }
+  ],
+  "repos": []
+}

@@ -1,43 +1,94 @@
 const axios = require('axios');
 
-function gl() {
+// ── Axios client factory ──────────────────────────────────────
+// Accepts an optional token — used for per-user OAuth tokens.
+// Falls back to server-level GITLAB_TOKEN env var.
+function gl(token) {
   return axios.create({
     baseURL: `${process.env.GITLAB_URL || 'https://gitlab.com'}/api/v4`,
     headers: {
-      'PRIVATE-TOKEN': process.env.GITLAB_TOKEN,
+      'PRIVATE-TOKEN': token || process.env.GITLAB_TOKEN,
       'Content-Type': 'application/json'
     },
     timeout: 20000
   });
 }
 
-// ── MR helpers (unchanged) ────────────────────────────────────
-async function getMRDiff(projectId, mrIid) {
-  const { data } = await gl().get(
+// ── OAuth helpers ─────────────────────────────────────────────
+
+/**
+ * Build the GitLab OAuth authorization URL.
+ * Redirect the user here to begin login.
+ */
+function getOAuthUrl() {
+  const base        = process.env.GITLAB_URL || 'https://gitlab.com';
+  const clientId    = process.env.GITLAB_OAUTH_CLIENT_ID;
+  const redirectUri = encodeURIComponent(process.env.GITLAB_OAUTH_REDIRECT_URI);
+  const scopes      = encodeURIComponent('api read_user');
+  return `${base}/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scopes}`;
+}
+
+/**
+ * Exchange a one-time authorization code for an access token.
+ * Called after GitLab redirects to /auth/gitlab/callback?code=...
+ */
+async function exchangeCodeForToken(code) {
+  const base = process.env.GITLAB_URL || 'https://gitlab.com';
+  const { data } = await axios.post(`${base}/oauth/token`, {
+    client_id:     process.env.GITLAB_OAUTH_CLIENT_ID,
+    client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
+    code,
+    grant_type:    'authorization_code',
+    redirect_uri:  process.env.GITLAB_OAUTH_REDIRECT_URI
+  });
+  return data; // { access_token, token_type, refresh_token, scope, ... }
+}
+
+/**
+ * Get the currently authenticated user's profile.
+ */
+async function getAuthenticatedUser(token) {
+  const { data } = await gl(token).get('/user');
+  return data; // { id, username, name, email, avatar_url, ... }
+}
+
+// ── MR helpers ────────────────────────────────────────────────
+async function getMRDiff(projectId, mrIid, token) {
+  const { data } = await gl(token).get(
     `/projects/${encodeURIComponent(projectId)}/merge_requests/${mrIid}/diffs`
   );
   return data;
 }
 
-async function getMRDetails(projectId, mrIid) {
-  const { data } = await gl().get(
+async function getMRDetails(projectId, mrIid, token) {
+  const { data } = await gl(token).get(
     `/projects/${encodeURIComponent(projectId)}/merge_requests/${mrIid}`
   );
   return data;
 }
 
-async function getProjectDetails(projectId) {
-  const { data } = await gl().get(`/projects/${encodeURIComponent(projectId)}`);
+async function getProjectDetails(projectId, token) {
+  const { data } = await gl(token).get(`/projects/${encodeURIComponent(projectId)}`);
   return data;
 }
 
-// ── Repo-level helpers (NEW) ──────────────────────────────────
+// ── Fetch ALL owned projects for a user ───────────────────────
+async function getUserProjects(token) {
+  const projects = [];
+  let page = 1;
+  while (true) {
+    const { data } = await gl(token).get('/projects', {
+      params: { owned: true, per_page: 100, page, order_by: 'last_activity_at', sort: 'desc' }
+    });
+    if (!data.length) break;
+    projects.push(...data);
+    if (data.length < 100) break;
+    page++;
+  }
+  return projects;
+}
 
-/**
- * List every file in a repo at a given ref (default: HEAD).
- * Returns flat array of { id, name, type, path, mode }
- * We filter to code + doc files only (skip binaries/locks etc.)
- */
+// ── Repo-level helpers ────────────────────────────────────────
 const CODE_EXTENSIONS = new Set([
   'js', 'ts', 'jsx', 'tsx', 'mjs', 'cjs',
   'py', 'rb', 'go', 'java', 'kt', 'scala',
@@ -54,9 +105,7 @@ function isCodeFile(path) {
   const lower = path.toLowerCase();
   const ext   = lower.split('.').pop();
   const base  = lower.split('/').pop();
-  // always include README, Dockerfile, Makefile etc.
   if (['dockerfile', 'makefile', 'procfile', 'readme'].some(k => base.startsWith(k))) return true;
-  // skip package-lock, yarn.lock, .min.js, dist/
   if (lower.includes('package-lock') || lower.includes('yarn.lock')) return false;
   if (lower.includes('.min.')) return false;
   if (lower.startsWith('dist/') || lower.startsWith('build/') || lower.startsWith('.git/')) return false;
@@ -64,34 +113,27 @@ function isCodeFile(path) {
   return CODE_EXTENSIONS.has(ext);
 }
 
-async function getRepoTree(projectId, ref = 'HEAD') {
+async function getRepoTree(projectId, ref = 'HEAD', token) {
   const items = [];
   let page = 1;
-  // GitLab paginates at 100 per page; keep fetching until done
   while (true) {
-    const { data } = await gl().get(
-      `/projects/${encodeURIComponent(projectId)}/repository/tree`, {
-        params: { ref, recursive: true, per_page: 100, page }
-      }
+    const { data } = await gl(token).get(
+      `/projects/${encodeURIComponent(projectId)}/repository/tree`,
+      { params: { ref, recursive: true, per_page: 100, page } }
     );
     if (!data.length) break;
     items.push(...data.filter(f => f.type === 'blob' && isCodeFile(f.path)));
     if (data.length < 100) break;
     page++;
   }
-  return items; // [{ id, name, type:'blob', path, mode }]
+  return items;
 }
 
-/**
- * Fetch a single file's raw content (base64-decoded).
- * Returns { path, content, size } or null on error.
- * We cap at 80 KB per file to stay within LLM context.
- */
 const MAX_FILE_BYTES = 80_000;
 
-async function getFileContent(projectId, filePath, ref = 'HEAD') {
+async function getFileContent(projectId, filePath, ref = 'HEAD', token) {
   try {
-    const { data } = await gl().get(
+    const { data } = await gl(token).get(
       `/projects/${encodeURIComponent(projectId)}/repository/files/${encodeURIComponent(filePath)}`,
       { params: { ref } }
     );
@@ -107,64 +149,53 @@ async function getFileContent(projectId, filePath, ref = 'HEAD') {
   }
 }
 
-/**
- * Fetch multiple files concurrently (rate-limited to 6 at a time).
- */
-async function getRepoFiles(projectId, tree, ref = 'HEAD') {
+async function getRepoFiles(projectId, tree, ref = 'HEAD', token) {
   const results = [];
   const CHUNK = 6;
   for (let i = 0; i < tree.length; i += CHUNK) {
-    const chunk = tree.slice(i, i + CHUNK);
-    const fetched = await Promise.all(chunk.map(f => getFileContent(projectId, f.path, ref)));
+    const chunk   = tree.slice(i, i + CHUNK);
+    const fetched = await Promise.all(chunk.map(f => getFileContent(projectId, f.path, ref, token)));
     results.push(...fetched.filter(Boolean));
   }
   return results;
 }
 
-/**
- * Get the README content specifically (for project context).
- */
-async function getReadme(projectId, ref = 'HEAD') {
+async function getReadme(projectId, ref = 'HEAD', token) {
   for (const name of ['README.md', 'README.rst', 'README.txt', 'readme.md']) {
-    try {
-      return await getFileContent(projectId, name, ref);
-    } catch {}
+    try { return await getFileContent(projectId, name, ref, token); } catch {}
   }
   return null;
 }
 
-/**
- * Get the last N commits on a branch.
- */
-async function getCommits(projectId, ref = 'HEAD', limit = 5) {
-  const { data } = await gl().get(
+async function getCommits(projectId, ref = 'HEAD', limit = 5, token) {
+  const { data } = await gl(token).get(
     `/projects/${encodeURIComponent(projectId)}/repository/commits`,
     { params: { ref_name: ref, per_page: limit } }
   );
   return data;
 }
 
-// ── Auto-register webhook ─────────────────────────────────────
-async function registerWebhook(projectId, webhookUrl, secret) {
+// ── Webhook registration ──────────────────────────────────────
+async function registerWebhook(projectId, webhookUrl, secret, token) {
   try {
-    const { data: existing } = await gl().get(
+    const { data: existing } = await gl(token).get(
       `/projects/${encodeURIComponent(projectId)}/hooks`
     );
     for (const hook of existing) {
       if (hook.url.includes('/webhook/gitlab')) {
-        await gl().delete(`/projects/${encodeURIComponent(projectId)}/hooks/${hook.id}`);
+        await gl(token).delete(`/projects/${encodeURIComponent(projectId)}/hooks/${hook.id}`);
         console.log(`[gitlab] Removed old webhook ${hook.id}`);
       }
     }
   } catch {}
 
-  const { data } = await gl().post(
+  const { data } = await gl(token).post(
     `/projects/${encodeURIComponent(projectId)}/hooks`,
     {
       url:                        webhookUrl,
       token:                      secret,
       merge_requests_events:      true,
-      push_events:                true,   // ← now also listen to pushes
+      push_events:                true,
       tag_push_events:            false,
       issues_events:              false,
       confidential_issues_events: false,
@@ -178,9 +209,9 @@ async function registerWebhook(projectId, webhookUrl, secret) {
   return data;
 }
 
-// ── MR comment builder ────────────────────────────────────────
-async function postMRComment(projectId, mrIid, analysis) {
-  await gl().post(
+// ── Comment builders ──────────────────────────────────────────
+async function postMRComment(projectId, mrIid, analysis, token) {
+  await gl(token).post(
     `/projects/${encodeURIComponent(projectId)}/merge_requests/${mrIid}/notes`,
     { body: buildComment(analysis) }
   );
@@ -191,53 +222,17 @@ function buildComment({ score, verdict, summary, dimensions, recommendations, pr
   const colorDot = score >= 65 ? '🟩' : score >= 40 ? '🟨' : '🟥';
   const bar      = '█'.repeat(Math.round(score / 10)) + '░'.repeat(10 - Math.round(score / 10));
   const imp      = { low: '🟢', medium: '🟡', high: '🔴' };
-
-  const dimRows = Object.entries(dimensions)
-    .map(([k, v]) =>
-      `| ${imp[v.impact]} **${k.charAt(0).toUpperCase() + k.slice(1)}** | ${v.score}/100 | ${v.finding} |`
-    ).join('\n');
-
+  const dimRows  = Object.entries(dimensions)
+    .map(([k, v]) => `| ${imp[v.impact]} **${k.charAt(0).toUpperCase()+k.slice(1)}** | ${v.score}/100 | ${v.finding} |`)
+    .join('\n');
   const recos = recommendations.length
     ? recommendations.map(r => `- **${r.line ? `Line ${r.line}: ` : ''}${r.issue}**\n  → ${r.fix}`).join('\n')
     : '- No specific refactors needed.';
-
-  return `## 🌱 GreenAgent Sustainability Report
-
-${icon} **${verdict.toUpperCase()}** &nbsp;&nbsp; \`${score} / 100\`
-
-${colorDot} \`${bar}\` ${score}%
-
-> ${summary}
-
----
-
-### Dimension Breakdown
-
-| Dimension | Score | Finding |
-|-----------|-------|---------|
-${dimRows}
-
----
-
-### Recommendations
-
-${recos}
-
----
-
-### 6-Month Projection
-
-> 📅 ${projection}
-
----
-<sub>Powered by **GreenAgent** · *Not "does it work?" but "will it hurt us?"*</sub>`;
+  return `## 🌱 GreenAgent Sustainability Report\n\n${icon} **${verdict.toUpperCase()}** &nbsp;&nbsp; \`${score} / 100\`\n\n${colorDot} \`${bar}\` ${score}%\n\n> ${summary}\n\n---\n\n### Dimension Breakdown\n\n| Dimension | Score | Finding |\n|-----------|-------|------|\n${dimRows}\n\n---\n\n### Recommendations\n\n${recos}\n\n---\n\n### 6-Month Projection\n\n> 📅 ${projection}\n\n---\n<sub>Powered by **GreenAgent** · *Not "does it work?" but "will it hurt us?"*</sub>`;
 }
 
-/**
- * Post a repo-level analysis as a commit comment on the latest commit.
- */
-async function postCommitComment(projectId, sha, analysis) {
-  await gl().post(
+async function postCommitComment(projectId, sha, analysis, token) {
+  await gl(token).post(
     `/projects/${encodeURIComponent(projectId)}/repository/commits/${sha}/comments`,
     { note: buildRepoComment(analysis) }
   );
@@ -248,62 +243,22 @@ function buildRepoComment({ score, verdict, summary, dimensions, recommendations
   const colorDot = score >= 65 ? '🟩' : score >= 40 ? '🟨' : '🟥';
   const bar      = '█'.repeat(Math.round(score / 10)) + '░'.repeat(10 - Math.round(score / 10));
   const imp      = { low: '🟢', medium: '🟡', high: '🔴' };
-
-  const dimRows = Object.entries(dimensions)
-    .map(([k, v]) =>
-      `| ${imp[v.impact]} **${k.charAt(0).toUpperCase() + k.slice(1)}** | ${v.score}/100 | ${v.finding} |`
-    ).join('\n');
-
-  const recos = (recommendations || []).length
+  const dimRows  = Object.entries(dimensions)
+    .map(([k, v]) => `| ${imp[v.impact]} **${k.charAt(0).toUpperCase()+k.slice(1)}** | ${v.score}/100 | ${v.finding} |`)
+    .join('\n');
+  const recos    = (recommendations || []).length
     ? recommendations.map(r => `- **${r.file ? `\`${r.file}\`: ` : ''}${r.issue}**\n  → ${r.fix}`).join('\n')
     : '- No specific refactors needed.';
-
   const hotNodes = (dependencyGraph?.nodes || [])
-    .filter(n => n.status !== 'stable')
-    .slice(0, 5)
-    .map(n => `- \`${n.id}\` — ${n.status} (${n.connections} connections)`)
-    .join('\n') || '- All files look stable.';
-
-  return `## 🌱 GreenAgent Repo Sustainability Report
-
-${icon} **${verdict.toUpperCase()}** &nbsp;&nbsp; \`${score} / 100\`
-
-${colorDot} \`${bar}\` ${score}%
-
-> ${summary}
-
----
-
-### Dimension Breakdown
-
-| Dimension | Score | Finding |
-|-----------|-------|---------|
-${dimRows}
-
----
-
-### Hotspot Files
-
-${hotNodes}
-
----
-
-### Recommendations
-
-${recos}
-
----
-
-### 6-Month Projection
-
-> 📅 ${projection}
-
----
-<sub>Powered by **GreenAgent** · Whole-repo analysis · *Not "does it work?" but "will it hurt us?"*</sub>`;
+    .filter(n => n.status !== 'stable').slice(0, 5)
+    .map(n => `- \`${n.id}\` — ${n.status} (${n.connections} connections)`).join('\n') || '- All files look stable.';
+  return `## 🌱 GreenAgent Repo Sustainability Report\n\n${icon} **${verdict.toUpperCase()}** &nbsp;&nbsp; \`${score} / 100\`\n\n${colorDot} \`${bar}\` ${score}%\n\n> ${summary}\n\n---\n\n### Dimension Breakdown\n\n| Dimension | Score | Finding |\n|-----------|-------|------|\n${dimRows}\n\n---\n\n### Hotspot Files\n\n${hotNodes}\n\n---\n\n### Recommendations\n\n${recos}\n\n---\n\n### 6-Month Projection\n\n> 📅 ${projection}\n\n---\n<sub>Powered by **GreenAgent** · Whole-repo analysis</sub>`;
 }
 
 module.exports = {
+  getOAuthUrl, exchangeCodeForToken, getAuthenticatedUser,
   getMRDiff, getMRDetails, getProjectDetails,
+  getUserProjects,
   getRepoTree, getRepoFiles, getReadme, getFileContent, getCommits,
   registerWebhook,
   postMRComment, postCommitComment

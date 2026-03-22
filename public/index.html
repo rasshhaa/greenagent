@@ -9,52 +9,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sage: #5C7A5C; --sage-light: #8AAE8A; --sage-pale: #C8D9C4;
-    --cream: #EDE8D5; --warm-yellow: #C8A832; --warm-yellow-light: #E2C85A;
-    --dark-forest: #1E2B1E; --off-white: #E8E2CC; --muted-text: #6B7B6B;
-    --border: rgba(92,122,92,0.15);
+    --sage:#5C7A5C;--sage-light:#8AAE8A;--sage-pale:#C8D9C4;
+    --cream:#EDE8D5;--warm-yellow:#C8A832;--warm-yellow-light:#E2C85A;
+    --dark-forest:#1E2B1E;--off-white:#E8E2CC;--muted-text:#6B7B6B;
+    --border:rgba(92,122,92,0.15);
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { font-family:'DM Sans',sans-serif; background:var(--off-white); color:var(--dark-forest); overflow-x:hidden; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--dark-forest);overflow-x:hidden;}
 
-  nav { position:fixed;top:0;width:100%;z-index:100;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;background:rgba(232,226,204,0.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border); }
-  .nav-logo { font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--dark-forest);letter-spacing:-0.02em;cursor:pointer; }
-  .nav-logo span { color:var(--sage); }
-  .nav-links { display:flex;gap:4px;list-style:none;align-items:center; }
-  .nav-links a { font-size:0.85rem;font-weight:500;color:var(--muted-text);text-decoration:none;letter-spacing:0.02em;padding:8px 16px;border-radius:100px;transition:all 0.2s;cursor:pointer; }
-  .nav-links a:hover { color:var(--dark-forest);background:rgba(92,122,92,0.07); }
-  .nav-links a.active { color:var(--dark-forest);background:rgba(92,122,92,0.1); }
-  .nav-cta { background:var(--dark-forest)!important;color:var(--cream)!important;padding:10px 22px!important;border-radius:100px!important;font-weight:500!important;transition:background 0.2s!important; }
-  .nav-cta:hover,.nav-cta.active { background:var(--sage)!important; }
+  nav{position:fixed;top:0;width:100%;z-index:100;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;background:rgba(232,226,204,0.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--dark-forest);letter-spacing:-0.02em;cursor:pointer;}
+  .nav-logo span{color:var(--sage);}
+  .nav-links{display:flex;gap:4px;list-style:none;align-items:center;}
+  .nav-links a{font-size:0.85rem;font-weight:500;color:var(--muted-text);text-decoration:none;letter-spacing:0.02em;padding:8px 16px;border-radius:100px;transition:all 0.2s;cursor:pointer;}
+  .nav-links a:hover{color:var(--dark-forest);background:rgba(92,122,92,0.07);}
+  .nav-links a.active{color:var(--dark-forest);background:rgba(92,122,92,0.1);}
+  .nav-cta{background:var(--dark-forest)!important;color:var(--cream)!important;padding:10px 22px!important;border-radius:100px!important;font-weight:500!important;transition:background 0.2s!important;}
+  .nav-cta:hover,.nav-cta.active{background:var(--sage)!important;}
 
-  .page { display:none;opacity:0;transform:translateY(14px);transition:opacity 0.45s ease,transform 0.45s ease; }
-  .page.active { display:block; }
-  .page.active.visible { opacity:1;transform:translateY(0); }
+  .nav-health { display: flex; align-items: center; gap: 6px; }
+.nav-hdot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted-text); }
+.nav-hdot.ok { background: var(--sage); }
+.nav-hdot.err { background: #e08080; }
+.nav-hlabel { font-size: 0.75rem; color: var(--muted-text); }
 
-  .btn-p { background:var(--dark-forest);color:var(--cream);padding:14px 30px;border-radius:100px;font-size:0.9rem;font-weight:500;border:none;cursor:pointer;transition:all 0.25s;font-family:'DM Sans',sans-serif; }
-  .btn-p:hover { background:var(--sage);transform:translateY(-2px);box-shadow:0 8px 24px rgba(92,122,92,0.3); }
-  .btn-p:disabled { opacity:.5;cursor:not-allowed;transform:none; }
-  .btn-g { color:var(--dark-forest);padding:14px 22px;border-radius:100px;font-size:0.9rem;font-weight:500;border:1.5px solid var(--border);cursor:pointer;background:transparent;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif; }
-  .btn-g:hover { border-color:var(--sage);color:var(--sage); }
-  .btn-gl { color:rgba(255,255,255,0.65);padding:14px 22px;border-radius:100px;font-size:0.9rem;font-weight:500;border:1.5px solid rgba(255,255,255,0.15);cursor:pointer;background:transparent;transition:all 0.25s;font-family:'DM Sans',sans-serif; }
-  .btn-gl:hover { border-color:rgba(255,255,255,0.4);color:#fff; }
+  .page{display:none;opacity:0;transform:translateY(14px);transition:opacity 0.45s ease,transform 0.45s ease;}
+  .page.active{display:block;}
+  .page.active.visible{opacity:1;transform:translateY(0);}
 
-  .s-label { font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);font-weight:500;margin-bottom:14px; }
-  .s-title { font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.15;letter-spacing:-0.025em;color:var(--dark-forest);margin-bottom:48px; }
-  .s-title em { font-style:italic;color:var(--sage); }
+  .btn-p{background:var(--dark-forest);color:var(--cream);padding:14px 30px;border-radius:100px;font-size:0.9rem;font-weight:500;border:none;cursor:pointer;transition:all 0.25s;font-family:'DM Sans',sans-serif;}
+  .btn-p:hover{background:var(--sage);transform:translateY(-2px);box-shadow:0 8px 24px rgba(92,122,92,0.3);}
+  .btn-p:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+  .btn-g{color:var(--dark-forest);padding:14px 22px;border-radius:100px;font-size:0.9rem;font-weight:500;border:1.5px solid var(--border);cursor:pointer;background:transparent;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;}
+  .btn-g:hover{border-color:var(--sage);color:var(--sage);}
+  .btn-gl{color:rgba(255,255,255,0.65);padding:14px 22px;border-radius:100px;font-size:0.9rem;font-weight:500;border:1.5px solid rgba(255,255,255,0.15);cursor:pointer;background:transparent;transition:all 0.25s;font-family:'DM Sans',sans-serif;}
+  .btn-gl:hover{border-color:rgba(255,255,255,0.4);color:#fff;}
+
+  .s-label{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);font-weight:500;margin-bottom:14px;}
+  .s-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.15;letter-spacing:-0.025em;color:var(--dark-forest);margin-bottom:48px;}
+  .s-title em{font-style:italic;color:var(--sage);}
 
   @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
   @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   .fa{opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
-  .fu{transform:translateY(32px)} .fl{transform:translateX(-32px)} .fr{transform:translateX(32px)} .fs{transform:scale(.93)}
+  .fu{transform:translateY(32px)}.fl{transform:translateX(-32px)}.fr{transform:translateX(32px)}.fs{transform:scale(.93)}
   .fa.vis{opacity:1;transform:none}
-  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
-  /* ── HERO ── */
+  /* HERO */
   @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
   @keyframes slideRight{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 
   .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 48px 80px;position:relative;overflow:hidden}
@@ -65,7 +70,6 @@
   .pc1{width:560px;height:560px;top:-120px;right:-100px;background:radial-gradient(circle,rgba(138,174,138,.16) 0%,transparent 70%)}
   .pc2{width:320px;height:320px;bottom:60px;left:2%;background:radial-gradient(circle,rgba(212,184,74,.11) 0%,transparent 70%)}
   .pc3{width:180px;height:180px;top:35%;right:28%;background:radial-gradient(circle,rgba(92,122,92,.09) 0%,transparent 70%)}
-
   .hl{position:relative;z-index:1}
   .hbadge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,122,92,.1);border:1px solid rgba(92,122,92,.25);padding:6px 16px 6px 10px;border-radius:100px;font-size:.78rem;font-weight:500;color:var(--sage);margin-bottom:32px;letter-spacing:.04em;opacity:0;animation:slideRight .7s cubic-bezier(.16,1,.3,1) .1s forwards}
   .hbdot{width:7px;height:7px;border-radius:50%;background:var(--warm-yellow);animation:pulse 2s ease-in-out infinite}
@@ -101,7 +105,7 @@
   .mi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px}
   .mil{font-size:.7rem;color:rgba(255,255,255,.35);margin-bottom:4px;letter-spacing:.03em}
   .miv{font-size:.95rem;font-weight:500;color:rgba(255,255,255,.85)}
-  .miv.g{color:var(--sage-light)} .miv.w{color:var(--warm-yellow-light)}
+  .miv.g{color:var(--sage-light)}.miv.w{color:var(--warm-yellow-light)}
   .sc-tip{background:rgba(212,184,74,.08);border:1px solid rgba(212,184,74,.2);border-radius:12px;padding:14px;font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.55}
   .sc-tip strong{color:var(--warm-yellow-light)}
 
@@ -135,7 +139,7 @@
   .ht-line{display:flex;align-items:flex-start;gap:10px;font-size:.78rem;line-height:1.5}
   .ht-prompt{color:var(--sage-light);flex-shrink:0;font-family:monospace}
   .ht-text{color:rgba(255,255,255,.6);font-family:monospace}
-  .ht-text.hi{color:var(--warm-yellow-light)} .ht-text.ok{color:var(--sage-light)}
+  .ht-text.hi{color:var(--warm-yellow-light)}.ht-text.ok{color:var(--sage-light)}
   .ht-divider{height:1px;background:rgba(255,255,255,.06);margin:4px 0}
   .ht-score{display:flex;align-items:center;justify-content:space-between;padding:14px;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.07)}
   .ht-score-label{font-size:.72rem;color:rgba(255,255,255,.4);letter-spacing:.04em}
@@ -178,7 +182,7 @@
   .cta-act{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
   .cta-note{margin-top:20px;font-size:.75rem;color:var(--muted-text)}
 
-  /* ── FEATURES ── */
+  /* FEATURES */
   .ph{padding:130px 48px 60px;position:relative;overflow:hidden}
   .ph-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 50% 60% at 70% 40%,rgba(138,174,138,.1) 0%,transparent 70%)}
   .ph-c{position:relative;z-index:1;max-width:700px}
@@ -211,10 +215,9 @@
   .std{font-size:.82rem;line-height:1.6;color:rgba(255,255,255,.4);font-weight:300}
   .stline{position:absolute;top:24px;right:-12px;width:24px;height:1px;background:rgba(255,255,255,.1)}
 
-  /* ── DASHBOARD SHELL ── */
+  /* DASHBOARD */
   .db-shell{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 64px)}
   .db-aside{background:var(--dark-forest);padding:24px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid rgba(255,255,255,.05)}
-  .db-aside-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:16px 12px 8px}
   .db-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:.84rem;color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
   .db-link svg{width:16px;height:16px;flex-shrink:0}
   .db-link:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8)}
@@ -235,15 +238,10 @@
   .db-stat-val{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;line-height:1;letter-spacing:-.03em;color:var(--dark-forest)}
   .db-stat-val.g{color:var(--sage)}
   .db-stat-sub{font-size:.75rem;color:var(--muted-text)}
-  .db-delta{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;padding:3px 9px;border-radius:100px;margin-top:4px;width:fit-content}
-  .dd-g{background:rgba(92,122,92,.1);color:var(--sage)}
-  .dd-y{background:rgba(200,168,50,.1);color:var(--warm-yellow)}
-  .dd-r{background:rgba(180,80,80,.1);color:#a05050}
   .db-card{background:#fff;border-radius:20px;border:1px solid var(--border);overflow:hidden}
   .db-card-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
   .db-card-title{font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted-text);font-weight:500}
   .db-2col{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;margin-bottom:24px}
-  .db-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px}
   .db-2eq{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
   .db-table{width:100%;border-collapse:collapse}
   .db-table th{font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted-text);padding:10px 24px;text-align:left;border-bottom:1px solid var(--border);font-weight:500}
@@ -284,30 +282,6 @@
   .db-field input:focus{border-color:var(--sage)}
   .db-result{background:var(--dark-forest);border-radius:20px;padding:28px;border:1px solid rgba(255,255,255,.06);box-shadow:0 20px 60px rgba(30,43,30,.15)}
   .db-result-empty{text-align:center;padding:48px 24px;opacity:.4}
-  .db-result-empty-icon{font-size:2rem;margin-bottom:12px}
-  .db-result-empty-text{font-size:.85rem;color:rgba(255,255,255,.5)}
-  .db-rp-score-row{display:flex;align-items:center;gap:18px;margin-bottom:24px}
-  .db-rp-ring{position:relative;width:80px;height:80px;flex-shrink:0}
-  .db-rp-ring svg{transform:rotate(-90deg)}
-  .rp-rt2{fill:none;stroke:rgba(255,255,255,.07);stroke-width:6}
-  .rp-rf2{fill:none;stroke:var(--sage-light);stroke-width:6;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:220;transition:stroke-dashoffset 1.2s cubic-bezier(.16,1,.3,1)}
-  .db-rp-rl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-  .db-rp-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#fff;line-height:1}
-  .db-rp-unit{font-size:.6rem;color:rgba(255,255,255,.35)}
-  .db-rp-info h4{font-size:.95rem;font-weight:500;color:#fff;margin-bottom:4px}
-  .db-rp-info p{font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.5}
-  .db-sec-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.25);margin-bottom:8px}
-  .db-dims{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
-  .db-dim{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px}
-  .db-dim-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.28);margin-bottom:4px}
-  .db-dim-score{font-size:.9rem;font-weight:600;margin-bottom:4px}
-  .db-dim-finding{font-size:.72rem;color:rgba(255,255,255,.42);line-height:1.4}
-  .db-recos{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-  .db-reco{background:rgba(212,184,74,.07);border:1px solid rgba(212,184,74,.18);border-radius:10px;padding:12px}
-  .db-reco-issue{font-size:.78rem;font-weight:500;color:var(--warm-yellow-light);margin-bottom:4px}
-  .db-reco-fix{font-size:.74rem;color:rgba(255,255,255,.5);line-height:1.5}
-  .db-projection{background:rgba(92,122,92,.08);border:1px solid rgba(92,122,92,.2);border-radius:10px;padding:12px;font-size:.78rem;color:rgba(255,255,255,.52);line-height:1.5}
-  .db-projection strong{color:var(--sage-light)}
   .db-setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
   .db-setup-step{background:#fff;border-radius:20px;border:1px solid var(--border);padding:28px}
   .db-step-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--sage-pale);line-height:1;margin-bottom:12px}
@@ -326,34 +300,45 @@
   .nav-hdot.err{background:#c06060}
   .nav-hlabel{font-size:.75rem;color:var(--muted-text)}
 
-  /* ── REPO ANALYSIS CARDS ── */
-  .repo-card{background:#fff;border-radius:20px;border:1px solid var(--border);padding:24px;transition:all .25s;cursor:pointer}
-  .repo-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(30,43,30,.1);border-color:var(--sage-pale)}
-  .repo-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
-  .repo-card-name{font-size:.92rem;font-weight:500;color:var(--dark-forest);margin-bottom:3px}
-  .repo-card-meta{font-size:.72rem;color:var(--muted-text)}
-  .repo-hotspot{background:rgba(212,184,74,.07);border:1px solid rgba(212,184,74,.18);border-radius:10px;padding:10px 12px;font-size:.75rem;color:var(--dark-forest);margin-bottom:8px;line-height:1.5}
-  .repo-hotspot-path{font-family:monospace;color:var(--sage);font-weight:500}
-  .repo-hotspot-risk-h{color:#a05050} .repo-hotspot-risk-m{color:var(--warm-yellow)} .repo-hotspot-risk-l{color:var(--sage)}
-
-  /* ── GRAPH VIEW ── */
-  #graphCanvas{cursor:grab;display:block;width:100%}
+  /* ═══════════════════════════════════════
+     GRAPH STYLES  — enhanced
+  ═══════════════════════════════════════ */
+  #graphCanvas{cursor:grab;display:block;width:100%;transition:opacity .3s}
   #graphCanvas:active{cursor:grabbing}
 
-  /* ── LAYER COLOUR KEY ── */
-  .layer-key{display:flex;flex-wrap:wrap;gap:8px;padding:12px 20px;background:rgba(0,0,0,.15);border-top:1px solid rgba(255,255,255,.06)}
-  .layer-chip{display:flex;align-items:center;gap:5px;font-size:.65rem;color:rgba(255,255,255,.5)}
-  .layer-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  /* Graph outer card */
+  .graph-card{border-radius:20px;overflow:hidden;border:1px solid var(--border);margin-bottom:20px;box-shadow:0 24px 60px rgba(30,43,30,.12)}
 
-  #db-toast{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--dark-forest);color:rgba(255,255,255,.85);padding:12px 20px;border-radius:12px;font-size:.82rem;box-shadow:0 8px 32px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:all .3s;max-width:320px;font-family:'DM Sans',sans-serif;border:1px solid rgba(255,255,255,.07)}
-  #db-toast.show{transform:translateY(0);opacity:1}
+  /* Graph header */
+  .graph-header{background:var(--dark-forest);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .graph-header-left{flex:1;min-width:0}
+  .graph-header-sublabel{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:5px}
+  .graph-header-title{font-size:.92rem;color:rgba(255,255,255,.8);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .graph-header-actions{display:flex;gap:8px;flex-shrink:0}
+  .graph-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:8px 16px;font-size:.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,.7);transition:all .2s}
+  .graph-btn:hover{background:rgba(255,255,255,.13);color:#fff;border-color:rgba(255,255,255,.25)}
+  .graph-btn.incident-active{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.45);color:#ef4444}
 
-  @keyframes spin{to{transform:rotate(360deg)}}
-  @keyframes dbpulse{0%,100%{opacity:1}50%{opacity:.35}}
-  .db-spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--sage-light);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
-  .db-blink{animation:dbpulse 1.4s ease-in-out infinite}
+  /* Legend bar */
+  .graph-legend{background:#162016;padding:9px 20px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)}
+  .graph-legend-label{font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.28)}
+  .legend-chip{display:flex;align-items:center;gap:5px;font-size:.68rem;color:rgba(255,255,255,.48)}
+  .legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .legend-sep{width:1px;height:14px;background:rgba(255,255,255,.1)}
 
-  /* ── GET STARTED ── */
+  /* Canvas area */
+  .graph-canvas-wrap{position:relative;background:#0d170d}
+  .graph-incident-badge{display:none;position:absolute;top:14px;right:14px;background:rgba(239,68,68,.14);border:1px solid rgba(239,68,68,.42);border-radius:8px;padding:6px 14px;font-size:.72rem;color:#ef4444;font-weight:600;letter-spacing:.05em;pointer-events:none}
+  .graph-stats-overlay{position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+  .graph-stat-pill{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);border-radius:8px;padding:5px 11px;font-size:.68rem;color:rgba(255,255,255,.55);white-space:nowrap}
+  .graph-stat-pill strong{color:rgba(255,255,255,.85)}
+
+  /* Node inspector strip */
+  .graph-inspector{background:#fff;padding:16px 24px;border-top:1px solid var(--border);min-height:60px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;transition:background .2s}
+  .graph-inspector.highlight{background:#f6faf6}
+  .inspector-hint{font-size:.78rem;color:var(--muted-text);opacity:.6;display:flex;align-items:center;gap:8px}
+
+  /* GET STARTED */
   .gs-page{min-height:100vh;display:grid;place-items:center;padding:100px 48px;background:var(--dark-forest);position:relative;overflow:hidden}
   .gs-page::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(92,122,92,.15) 0%,transparent 60%)}
   .gs-inner{position:relative;z-index:1;text-align:center;max-width:640px}
@@ -370,24 +355,32 @@
   .fl span{color:var(--sage-light)}
   .fn{font-size:.78rem;color:rgba(255,255,255,.25)}
 
+  #db-toast{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--dark-forest);color:rgba(255,255,255,.85);padding:12px 20px;border-radius:12px;font-size:.82rem;box-shadow:0 8px 32px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:all .3s;max-width:320px;font-family:'DM Sans',sans-serif;border:1px solid rgba(255,255,255,.07)}
+  #db-toast.show{transform:translateY(0);opacity:1}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes dbpulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .db-spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--sage-light);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+  .db-blink{animation:dbpulse 1.4s ease-in-out infinite}
+
   @media(max-width:900px){
-    .hero{grid-template-columns:1fr;padding-left:24px;padding-right:24px}
+    .hero,.hhow{grid-template-columns:1fr;padding-left:24px;padding-right:24px}
     .hfgrid,.fgrid,.stgrid{grid-template-columns:1fr}
     .fc.lg{grid-column:span 1;grid-template-columns:1fr}
     .db-shell{grid-template-columns:1fr}
     .db-aside{display:none}
-    .db-2col,.db-3col,.db-2eq,.db-setup-grid{grid-template-columns:1fr}
+    .db-2col,.db-2eq,.db-setup-grid{grid-template-columns:1fr}
     .db-stats{grid-template-columns:1fr 1fr}
     .db-main{padding:20px 24px}
     nav{padding:0 24px}
     .nav-links li:not(:last-child){display:none}
     footer{flex-direction:column;gap:16px;text-align:center}
+    .graph-header{flex-direction:column;align-items:flex-start;gap:12px}
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="go('home')">Green<span>Agent</span></div>
   <ul class="nav-links">
@@ -448,7 +441,7 @@
     </div>
   </section>
 
-  <div class="strip"><div class="strip-i"><div class="si"><div class="sd"></div>Full Repo Scan</div><div class="si"><div class="sd"></div>Real Import Graph</div><div class="si"><div class="sd"></div>Hotspot Detection</div><div class="si"><div class="sd"></div>GitLab Push Hook</div><div class="si"><div class="sd"></div>Cross-file Analysis</div><div class="si"><div class="sd"></div>6-Month Trajectory</div><div class="si"><div class="sd"></div>MR-level Analysis</div><div class="si"><div class="sd"></div>Full Repo Scan</div><div class="si"><div class="sd"></div>Real Import Graph</div><div class="si"><div class="sd"></div>Hotspot Detection</div><div class="si"><div class="sd"></div>GitLab Push Hook</div><div class="si"><div class="sd"></div>Cross-file Analysis</div><div class="si"><div class="sd"></div>6-Month Trajectory</div><div class="si"><div class="sd"></div>MR-level Analysis</div></div></div>
+  <div class="strip"><div class="strip-i"><div class="si"><div class="sd"></div>Full Repo Scan</div><div class="si"><div class="sd"></div>Real Import Graph</div><div class="si"><div class="sd"></div>Hotspot Detection</div><div class="si"><div class="sd"></div>GitLab Push Hook</div><div class="si"><div class="sd"></div>Cross-file Analysis</div><div class="si"><div class="sd"></div>6-Month Trajectory</div><div class="si"><div class="sd"></div>Incident Mode</div><div class="si"><div class="sd"></div>Full Repo Scan</div><div class="si"><div class="sd"></div>Real Import Graph</div><div class="si"><div class="sd"></div>Hotspot Detection</div><div class="si"><div class="sd"></div>GitLab Push Hook</div><div class="si"><div class="sd"></div>Cross-file Analysis</div><div class="si"><div class="sd"></div>6-Month Trajectory</div><div class="si"><div class="sd"></div>Incident Mode</div></div></div>
 
   <div class="hstats">
     <div class="hstat fa fu"><div class="hstat-num"><em>2</em> levels</div><div class="hstat-label">MR-level diff analysis AND whole-repo push analysis — both in one tool</div></div>
@@ -499,7 +492,7 @@
       <div class="hfc fa fu d1" onclick="go('features')">
         <div class="hfi"><svg viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="8" r="2"/><line x1="7" y1="12" x2="10" y2="8"/><line x1="14" y1="8" x2="17" y2="6"/><line x1="14" y1="9" x2="17" y2="18"/></svg></div>
         <div class="hft">Real Dependency Graph</div>
-        <p class="hfd">Built from actual import/require statements — not fake architecture nodes. Every edge is a real dependency your code has.</p>
+        <p class="hfd">Built from actual import/require statements — not fake architecture nodes. Every edge is a real dependency your code has. Click any node to inspect it.</p>
       </div>
       <div class="hfc fa fu d2" onclick="go('features')">
         <div class="hfi"><svg viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
@@ -508,8 +501,8 @@
       </div>
       <div class="hfc fa fu d3" onclick="go('features')">
         <div class="hfi"><svg viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
-        <div class="hft">Hotspot File Detection</div>
-        <p class="hfd">Files with the highest in-degree (many dependents) or out-degree (many imports) are flagged as change-risk hotspots before they cause cascades.</p>
+        <div class="hft">Incident Mode</div>
+        <p class="hfd">Simulate a breach from any hotspot node and watch the propagation ripple through your dependency graph in real-time — revealing your blast radius.</p>
       </div>
     </div>
   </section>
@@ -519,7 +512,7 @@
     <div class="tgrid">
       <div class="tcard fa fu d1"><div class="tcard-quote">On every MR, GreenAgent scores just the changed files — fast feedback on the diff before it merges.</div><div class="tcard-author"><div class="tcard-av" style="background:var(--sage);font-size:.6rem">MR</div><div><div class="tcard-name">MR-Level Analysis</div><div class="tcard-role">Diff-based · Posts score badge on merge request</div></div></div></div>
       <div class="tcard fa fu d2"><div class="tcard-quote">On every push, GreenAgent fetches the entire repo, builds a real import graph, and analyses how all the files work together.</div><div class="tcard-author"><div class="tcard-av" style="background:#7a6240;font-size:.6rem">REPO</div><div><div class="tcard-name">Repo-Level Analysis</div><div class="tcard-role">Full codebase · Real dependency graph · Hotspot detection</div></div></div></div>
-      <div class="tcard fa fu d3"><div class="tcard-quote">The dependency graph is built from your actual import statements — showing which files are most dangerous to change and why.</div><div class="tcard-author"><div class="tcard-av" style="background:#2D3A2D;font-size:.6rem">GRAPH</div><div><div class="tcard-name">Real Graph, Not Fake Nodes</div><div class="tcard-role">Static import analysis · In/out degree · Layer inference</div></div></div></div>
+      <div class="tcard fa fu d3"><div class="tcard-quote">Toggle Incident Mode on any graph to see how a failure propagates — which nodes get breached, which become warnings, which stay isolated.</div><div class="tcard-author"><div class="tcard-av" style="background:#2D3A2D;font-size:.6rem">⚡</div><div><div class="tcard-name">Incident Propagation</div><div class="tcard-role">Blast radius · Animated breach · Risk isolation</div></div></div></div>
     </div>
   </section>
 
@@ -558,10 +551,10 @@
     <div class="hiw-l">The Process</div>
     <h2 class="hiw-t">Push → graph → score → <em>report</em></h2>
     <div class="stgrid">
-      <div class="stcard fa fu d1"><div class="stn">01</div><div class="stt">Push to GitLab</div><p class="std">Developer pushes commits to any branch. GitLab fires a Push Hook to GreenAgent.</p><div class="stline"></div></div>
+      <div class="stcard fa fu d1"><div class="stn">01</div><div class="stt">Push to GitLab</div><p class="std">Developer pushes commits. GitLab fires a Push Hook to GreenAgent.</p><div class="stline"></div></div>
       <div class="stcard fa fu d2"><div class="stn">02</div><div class="stt">Fetch entire repo</div><p class="std">GreenAgent fetches every source file via GitLab API — up to 120 files, priority-sorted by architectural importance.</p><div class="stline"></div></div>
       <div class="stcard fa fu d3"><div class="stn">03</div><div class="stt">Build real graph</div><p class="std">Static import analysis extracts all import/require statements and resolves them to actual file paths — building a real dependency graph.</p><div class="stline"></div></div>
-      <div class="stcard fa fu d4"><div class="stn">04</div><div class="stt">Score + report</div><p class="std">Groq (Llama 3.3 70B) analyses the whole codebase together, identifies hotspots, and posts a sustainability report on the commit.</p></div>
+      <div class="stcard fa fu d4"><div class="stn">04</div><div class="stt">Score + report</div><p class="std">Groq (Llama 3.3 70B) analyses the whole codebase, identifies hotspots, and posts a sustainability report on the commit.</p></div>
     </div>
   </section>
   <footer><div class="fl">Green<span>Agent</span></div><div class="fn">Sustainable code. Sustainable future. 🌱</div></footer>
@@ -571,189 +564,240 @@
 <div id="p-db-overview" class="page">
   <div class="db-shell">
     <aside class="db-aside">
-      <button class="db-link active" id="db-nav-overview" onclick="dbView('overview')">
+      <button class="db-link active" id="db-nav-overview" onclick="dbNav('overview')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        Overview
+        Dashboard
       </button>
-      <button class="db-link" id="db-nav-repo" onclick="dbView('repo')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="8" r="2"/><line x1="7" y1="12" x2="10" y2="8"/><line x1="14" y1="8" x2="17" y2="6"/><line x1="14" y1="9" x2="17" y2="18"/></svg>
-        Repo Analyses
-      </button>
-      <button class="db-link" id="db-nav-analyze" onclick="dbView('analyze')">
+      <button class="db-link" id="db-nav-analyze" onclick="dbNav('analyze')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         Analyze MR
       </button>
-      <button class="db-link" id="db-nav-graph" onclick="dbView('graph')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3l7 7m0 0l7-7m-7 7v11"/><path d="M17 17l4 4m0 0l-4-4m4 4H7"/></svg>
-        Dependency Graph
-      </button>
-      <button class="db-link" id="db-nav-setup" onclick="dbView('setup')">
+      <button class="db-link" id="db-nav-setup" onclick="dbNav('setup')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg>
         Setup
       </button>
       <div class="db-aside-spacer"></div>
-      <div class="db-version">GreenAgent v2.0 · Hackathon 🌱</div>
+      <div class="db-version">GreenAgent v2.0 🌱</div>
     </aside>
 
     <div class="db-main">
 
-      <!-- ── OVERVIEW ── -->
+      <!-- ════ OVERVIEW ════ -->
       <div class="db-view active" id="db-view-overview">
-        <div class="db-ph"><div class="db-ph-label">Live Overview</div><h1>Sustainability <em>at a glance</em></h1><p>MR analyses + repo scans · Auto-refreshes every 15s</p></div>
-        <div class="db-stats">
-          <div class="db-stat"><div class="db-stat-label">MR Avg Score</div><div class="db-stat-val g" id="dbStatAvg">—</div><div class="db-stat-sub">across all MRs</div></div>
-          <div class="db-stat"><div class="db-stat-label">MRs Analyzed</div><div class="db-stat-val" id="dbStatTotal">—</div><div class="db-stat-sub">merge requests</div></div>
-          <div class="db-stat"><div class="db-stat-label">Repo Scans</div><div class="db-stat-val g" id="dbStatRepoTotal">—</div><div class="db-stat-sub">full repo analyses</div></div>
-          <div class="db-stat"><div class="db-stat-label">Latest Repo Score</div><div class="db-stat-val" id="dbStatRepoScore">—</div><div class="db-stat-sub" id="dbStatRepoName">—</div></div>
+        <div class="db-ph">
+          <div class="db-ph-label">Live Overview</div>
+          <h1>Sustainability <em>at a glance</em></h1>
+          <p>Click any result to open the full AI report + interactive dependency graph</p>
         </div>
-        <div class="db-2col">
-          <div class="db-card">
-            <div class="db-card-head"><span class="db-card-title">Recent MR Analyses</span><button class="btn-g" onclick="dbLoadDashboard()" style="font-size:.75rem;padding:8px 14px">↻ Refresh</button></div>
-            <div id="dbTableWrap"><div class="db-empty"><div class="db-empty-icon">🌱</div><div class="db-empty-title">No MR analyses yet</div><div class="db-empty-sub">Open a merge request on your connected repo to trigger analysis.</div></div></div>
+        <div class="db-stats" style="margin-bottom:24px">
+          <div class="db-stat"><div class="db-stat-label">MR Avg Score</div><div class="db-stat-val g" id="dbStatAvg">—</div><div class="db-stat-sub">merge requests</div></div>
+          <div class="db-stat"><div class="db-stat-label">Total MRs</div><div class="db-stat-val" id="dbStatTotal">—</div><div class="db-stat-sub">analyzed</div></div>
+          <div class="db-stat"><div class="db-stat-label">Repo Scans</div><div class="db-stat-val g" id="dbStatRepoTotal">—</div><div class="db-stat-sub">full codebase</div></div>
+          <div class="db-stat"><div class="db-stat-label">Latest Repo</div><div class="db-stat-val" id="dbStatRepoScore">—</div><div class="db-stat-sub" id="dbStatRepoName">—</div></div>
+        </div>
+
+        <div class="db-card" style="margin-bottom:20px">
+          <div class="db-card-head">
+            <span class="db-card-title">🌳 Repo Scans</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input id="repoProjectId" type="text" placeholder="Project ID or namespace/repo"
+                style="background:var(--off-white);border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.82rem;font-family:'DM Sans',sans-serif;color:var(--dark-forest);outline:none;width:200px;transition:border-color .2s"
+                onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='var(--border)'">
+              <button class="btn-g" onclick="triggerRepoAnalysis()" id="repoAnalyzeBtn" style="padding:8px 16px;font-size:.8rem">Scan Now</button>
+              <button class="btn-g" onclick="dbLoadRepoAnalyses()" style="padding:8px 14px;font-size:.8rem">↻</button>
+            </div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:20px">
-            <div class="db-card">
-              <div class="db-card-head"><span class="db-card-title">MR Score Trend</span></div>
-              <div style="padding:20px"><div class="db-spark" id="dbSpark"><div class="db-sbar" style="height:20px"></div><div class="db-sbar" style="height:30px"></div><div class="db-sbar hi" style="height:44px"></div><div class="db-sbar" style="height:28px"></div><div class="db-sbar hi" style="height:48px"></div></div><div style="font-size:.7rem;color:var(--muted-text);margin-top:8px">Last 10 MR analyses</div></div>
-            </div>
-            <div class="db-card">
-              <div class="db-card-head"><span class="db-card-title">Latest Repo Hotspots</span></div>
-              <div style="padding:20px" id="overviewHotspots"><div style="font-size:.82rem;color:var(--muted-text)">Push to a branch to trigger repo analysis</div></div>
-            </div>
+          <div id="repoList">
+            <div class="db-empty"><div class="db-empty-icon">🌳</div><div class="db-empty-title">No repo scans yet</div><div class="db-empty-sub">Push to your connected repo — GreenAgent fetches every file and builds the real import dependency graph.</div></div>
+          </div>
+        </div>
+
+        <div class="db-card">
+          <div class="db-card-head">
+            <span class="db-card-title">🔍 MR Analyses</span>
+            <button class="btn-g" onclick="dbLoadMRAnalyses()" style="padding:8px 14px;font-size:.8rem">↻ Refresh</button>
+          </div>
+          <div id="mrList">
+            <div class="db-empty"><div class="db-empty-icon">🌱</div><div class="db-empty-title">No MR analyses yet</div><div class="db-empty-sub">Open a merge request on your connected repo to trigger analysis.</div></div>
           </div>
         </div>
       </div>
 
-      <!-- ── REPO ANALYSES ── -->
-      <div class="db-view" id="db-view-repo">
-        <div class="db-ph"><div class="db-ph-label">Whole-Repo Intelligence</div><h1>Repo <em>Analyses</em></h1><p>Full codebase scans triggered on every push — real dependency graphs, hotspot detection, cross-file sustainability scoring</p></div>
+      <!-- ════ DETAIL VIEW ════ -->
+      <div class="db-view" id="db-view-detail" style="display:none">
 
-        <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
-          <div class="db-field" style="margin:0;flex:1;min-width:220px">
-            <label style="display:block;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted-text);margin-bottom:7px">Project ID (for manual trigger)</label>
-            <input type="text" id="repoProjectId" placeholder="e.g. 12345678 or group/repo" style="width:100%;background:var(--off-white);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--dark-forest);outline:none">
+        <!-- Sticky topbar -->
+        <div id="detail-topbar" style="position:sticky;top:64px;z-index:50;background:rgba(232,226,204,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 48px;margin:0 -48px 32px -48px">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button onclick="dbNav('overview')" style="display:inline-flex;align-items:center;gap:8px;background:var(--dark-forest);color:var(--cream);border:none;border-radius:100px;padding:10px 20px;font-size:.85rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s" onmouseover="this.style.background='var(--sage)'" onmouseout="this.style.background='var(--dark-forest)'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</button>
+            <div style="width:1px;height:20px;background:var(--border)"></div>
+            <div><div id="detailTitle" style="font-size:.9rem;font-weight:600;color:var(--dark-forest)"></div><div id="detailMeta" style="font-size:.72rem;color:var(--muted-text)"></div></div>
           </div>
-          <div style="display:flex;align-items:flex-end;gap:8px">
-            <button class="btn-p" onclick="triggerRepoAnalysis()" id="repoAnalyzeBtn">Scan Repo Now</button>
-            <button class="btn-g" onclick="dbLoadRepoAnalyses()">↻ Refresh</button>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div id="detailTopScoreBadge" style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900"></div>
+            <div id="detailTopVerdict" style="font-size:.75rem;font-weight:600;padding:4px 12px;border-radius:100px"></div>
           </div>
         </div>
 
-        <div id="repoAnalysesList"><div class="db-empty"><div class="db-empty-icon">🌳</div><div class="db-empty-title">No repo scans yet</div><div class="db-empty-sub">Push to a connected repo or use the manual trigger above. GreenAgent will fetch every file, build the import graph, and post a report on your commit.</div></div></div>
-      </div>
+        <!-- Hero score -->
+        <div id="detailHero" style="background:var(--dark-forest);border-radius:24px;padding:48px;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(138,174,138,.15) 0%,transparent 60%);pointer-events:none"></div>
+          <div style="position:absolute;bottom:-60px;left:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(212,184,74,.08) 0%,transparent 60%);pointer-events:none"></div>
+          <div style="position:relative;z-index:1;display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:center">
+            <div style="text-align:center">
+              <div id="detailScoreRing" style="display:flex;justify-content:center;margin-bottom:12px"></div>
+              <div id="detailVerdictBadge"></div>
+            </div>
+            <div>
+              <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:10px">What GreenAgent Found</div>
+              <div id="detailSummary" style="font-size:1.05rem;line-height:1.75;color:rgba(255,255,255,.85);margin-bottom:20px;font-weight:300"></div>
+              <div style="height:1px;background:rgba(255,255,255,.07);margin-bottom:16px"></div>
+              <div style="font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px">6-Month Projection</div>
+              <div id="detailProjection" style="font-size:.88rem;line-height:1.65;color:rgba(255,255,255,.5)"></div>
+            </div>
+            <div id="detailScoreMeta" style="display:flex;flex-direction:column;gap:14px;min-width:120px"></div>
+          </div>
+        </div>
 
-      <!-- ── ANALYZE MR ── -->
-      <div class="db-view" id="db-view-analyze">
-        <div class="db-ph"><div class="db-ph-label">Manual Trigger</div><h1>Analyze a <em>Merge Request</em></h1><p>Fetch any GitLab MR diff, run it through Groq, get a score + comment posted back</p></div>
+        <!-- Dimensions -->
+        <div style="margin-bottom:20px">
+          <div style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:14px">Dimension Breakdown</div>
+          <div id="detailDims" style="display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+        </div>
+
+        <!-- Recommendations -->
+        <div style="background:#fff;border-radius:20px;border:1px solid var(--border);padding:28px;margin-bottom:20px">
+          <div style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:18px">AI Recommendations</div>
+          <div id="detailRecos" style="display:flex;flex-direction:column;gap:12px"></div>
+        </div>
+
+        <!-- Hotspots (repo only) -->
+        <div id="detailHotspotsWrap" style="display:none;background:#fff;border-radius:20px;border:1px solid var(--border);padding:28px;margin-bottom:20px">
+          <div style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:18px">🔥 Hotspot Files</div>
+          <div id="detailHotspots"></div>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             ENHANCED DEPENDENCY GRAPH (repo only)
+        ══════════════════════════════════════ -->
+        <div id="detailGraphWrap" style="display:none;margin-bottom:20px">
+          <div class="graph-card">
+
+            <!-- Header -->
+            <div class="graph-header">
+              <div class="graph-header-left">
+                <div class="graph-header-sublabel" id="graphHeaderSublabel">Dependency Graph</div>
+                <div class="graph-header-title" id="graphHeaderTitle">—</div>
+              </div>
+              <div class="graph-header-actions">
+                <!-- Incident mode -->
+                <button class="graph-btn" id="incidentBtn" onclick="toggleIncidentMode()">⚡ Incident Mode</button>
+                <!-- Layout toggle -->
+                <button class="graph-btn" id="layoutBtn" onclick="toggleLayout()">⊞ Cluster Layout</button>
+                <!-- Reset -->
+                <button class="graph-btn" onclick="resetGraph()">↺ Reset</button>
+              </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="graph-legend">
+              <span class="graph-legend-label">Status</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#ef4444"></span>Hotspot — high coupling</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#f59e0b"></span>Hub — many dependents</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#06b6d4"></span>Stable</span>
+              <span class="legend-sep"></span>
+              <span class="graph-legend-label">Layer</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#8B5CF6"></span>route</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#10B981"></span>service</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#3B82F6"></span>data/model</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#F59E0B"></span>middleware</span>
+              <span class="legend-chip"><span class="legend-dot" style="background:#6B7280"></span>util/config</span>
+            </div>
+
+            <!-- Canvas wrap -->
+            <div class="graph-canvas-wrap">
+              <canvas id="graphCanvas" width="900" height="520" style="width:100%;display:block;cursor:grab"></canvas>
+
+              <!-- Incident badge -->
+              <div class="graph-incident-badge" id="incidentLabel">⚡ INCIDENT MODE ACTIVE</div>
+
+              <!-- Stats overlay (top-left) -->
+              <div class="graph-stats-overlay" id="graphStatsOverlay" style="display:none">
+                <div class="graph-stat-pill" id="gStatNodes">Nodes: —</div>
+                <div class="graph-stat-pill" id="gStatEdges">Edges: —</div>
+                <div class="graph-stat-pill" id="gStatHotspots" style="color:#ef4444">Hotspots: —</div>
+                <div class="graph-stat-pill" id="gStatBlast">Blast radius: —</div>
+              </div>
+            </div>
+
+            <!-- Node inspector -->
+            <div class="graph-inspector" id="graphInspector">
+              <div class="inspector-hint">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 5V7.5M7 9.5V9.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Click any node to inspect it · Drag nodes to rearrange · Toggle Incident Mode to simulate breach propagation
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /detail -->
+
+      <!-- ════ ANALYZE MR ════ -->
+      <div class="db-view" id="db-view-analyze" style="display:none">
+        <div class="db-ph"><div class="db-ph-label">Manual Trigger</div><h1>Analyze a <em>Merge Request</em></h1><p>Enter any GitLab MR — GreenAgent fetches the diff, scores it, and posts a comment back automatically.</p></div>
         <div class="db-2eq">
           <div class="db-form-card">
             <h3>Run <em>Analysis</em></h3>
-            <p>Enter your GitLab project and MR number. GreenAgent fetches the diff, scores it with Groq (Llama 3.3 70B), and posts a full report as a GitLab comment.</p>
-            <div class="db-field"><label>Project ID or namespace/repo</label><input type="text" id="dbProject" placeholder="e.g. 12345678 or mygroup/myrepo"></div>
-            <div class="db-field"><label>MR IID (the !number)</label><input type="number" id="dbMrIid" placeholder="e.g. 42"></div>
+            <p>Groq (Llama 3.3 70B) analyses the diff for energy, debt, scalability, and architecture issues.</p>
+            <div class="db-field"><label>Project ID or namespace/repo</label><input type="text" id="dbProject" placeholder="e.g. acme-corp/api-service"></div>
+            <div class="db-field"><label>MR IID (the !number)</label><input type="number" id="dbMrIid" placeholder="e.g. 1"></div>
             <button class="btn-p" id="dbAnalyzeBtn" onclick="dbRunAnalysis()" style="width:100%;padding:13px;margin-top:4px">Analyze MR</button>
             <div id="dbAnalyzeStatus" style="margin-top:14px;font-size:.78rem;color:var(--muted-text);display:none"></div>
           </div>
-          <div id="dbResultPanel"><div class="db-result"><div class="db-result-empty"><div class="db-result-empty-icon">🔍</div><div class="db-result-empty-text">Result will appear here</div></div></div></div>
-        </div>
-      </div>
-
-      <!-- ── DEPENDENCY GRAPH ── -->
-      <div class="db-view" id="db-view-graph">
-        <div class="db-ph"><div class="db-ph-label">Real Import Graph</div><h1>Dependency <em>Graph</em></h1><p>Built from actual import/require statements — every node is a file, every edge is a real dependency. Click a node to inspect it. Toggle Incident Mode to simulate cascade failures.</p></div>
-
-        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap" id="graphMRList">
-          <div style="font-size:.82rem;color:var(--muted-text)">Run a repo analysis first to see the real import graph →</div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 300px;gap:20px">
-          <div class="db-card" style="position:relative;overflow:hidden">
-            <div class="db-card-head">
-              <span class="db-card-title" id="graphTitle">No analysis selected</span>
-              <div style="display:flex;gap:8px">
-                <button class="btn-g" id="incidentBtn" onclick="toggleIncidentMode()" style="display:none;font-size:.75rem;padding:8px 14px">⚡ Incident Mode</button>
-                <button class="btn-g" onclick="resetGraph()" style="font-size:.75rem;padding:8px 14px">↺ Reset</button>
-              </div>
-            </div>
-            <div style="position:relative;background:#0f1a0f">
-              <canvas id="graphCanvas" width="800" height="540" style="width:100%;display:block"></canvas>
-              <div class="layer-key">
-                <div class="layer-chip"><div class="layer-dot" style="background:#ef4444"></div>Hotspot</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#f59e0b"></div>Hub</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#06b6d4"></div>Stable</div>
-                <div class="layer-chip" style="margin-left:8px;color:rgba(255,255,255,.3)">Layers:</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#8B5CF6"></div>route</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#10B981"></div>service</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#3B82F6"></div>data</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#F59E0B"></div>model</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#EC4899"></div>middleware</div>
-                <div class="layer-chip"><div class="layer-dot" style="background:#6B7280"></div>util/other</div>
-              </div>
-              <div id="incidentLabel" style="display:none;position:absolute;top:14px;right:14px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:8px;padding:5px 12px;font-size:.72rem;color:#ef4444;font-weight:500;letter-spacing:.04em">⚡ INCIDENT MODE</div>
-            </div>
-          </div>
-
-          <div style="display:flex;flex-direction:column;gap:16px">
-            <div class="db-card" id="nodeDetail">
-              <div class="db-card-head"><span class="db-card-title">Node Detail</span></div>
-              <div style="padding:20px;font-size:.82rem;color:var(--muted-text)"><div id="nodeDetailContent">Click a node to inspect it</div></div>
-            </div>
-            <div class="db-card">
-              <div class="db-card-head"><span class="db-card-title">Graph Stats</span></div>
-              <div style="padding:20px;display:flex;flex-direction:column;gap:10px">
-                <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--muted-text)">Total files</span><span id="gStatNodes" style="font-weight:600">—</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--muted-text)">Import edges</span><span id="gStatEdges" style="font-weight:600">—</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--muted-text)">Hotspot files</span><span id="gStatChanged" style="color:#ef4444;font-weight:600">—</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--muted-text)">Hub files</span><span id="gStatAffected" style="color:#f59e0b;font-weight:600">—</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--muted-text)">Change blast radius</span><span id="gStatBlast" style="font-weight:600">—</span></div>
-              </div>
-            </div>
-            <div class="db-card" id="graphMRSummary" style="display:none">
-              <div class="db-card-head"><span class="db-card-title">Analysis Summary</span></div>
-              <div style="padding:20px" id="graphMRSummaryContent"></div>
+          <div id="dbResultPanel">
+            <div style="background:var(--dark-forest);border-radius:20px;padding:48px 24px;text-align:center;opacity:.4">
+              <div style="font-size:2rem;margin-bottom:12px">🔍</div>
+              <div style="font-size:.85rem;color:rgba(255,255,255,.5)">Result will appear here</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── SETUP ── -->
-      <div class="db-view" id="db-view-setup">
-        <div class="db-ph"><div class="db-ph-label">Configuration</div><h1>Setup & <em>Connect</em></h1><p>Get GreenAgent connected to GitLab in under 5 minutes. Both MR Hook and Push Hook are registered automatically.</p></div>
+      <!-- ════ SETUP ════ -->
+      <div class="db-view" id="db-view-setup" style="display:none">
+        <div class="db-ph"><div class="db-ph-label">Configuration</div><h1>Setup & <em>Connect</em></h1><p>Get GreenAgent connected in under 5 minutes. Both MR Hook and Push Hook register automatically.</p></div>
         <div class="db-setup-grid">
           <div class="db-setup-step">
             <div class="db-step-num">01</div>
             <div class="db-step-title">Install & configure</div>
-            <p class="db-step-desc">Copy the env template, fill in your keys, and start the server.</p>
+            <p class="db-step-desc">Fill in your keys and start the server.</p>
             <div class="db-code" id="dbc1">cp .env.example .env<br>npm install<br>npm start<button class="db-copy" onclick="dbCopy('dbc1')">copy</button></div>
             <div style="margin-top:16px" class="db-env-list">
-              <div class="db-env-row"><span class="db-env-key">GROQ_API_KEY</span><span class="db-env-desc">console.groq.com → API Keys (free tier)</span></div>
-              <div class="db-env-row"><span class="db-env-key">GITLAB_TOKEN</span><span class="db-env-desc">GitLab → User Settings → Access Tokens (api scope)</span></div>
+              <div class="db-env-row"><span class="db-env-key">GROQ_API_KEY</span><span class="db-env-desc">console.groq.com → API Keys</span></div>
+              <div class="db-env-row"><span class="db-env-key">GITLAB_OAUTH_CLIENT_ID</span><span class="db-env-desc">GitLab → Applications → New (set redirect to TUNNEL_URL/auth/gitlab/callback)</span></div>
+              <div class="db-env-row"><span class="db-env-key">GITLAB_OAUTH_CLIENT_SECRET</span><span class="db-env-desc">Generated when you create the GitLab OAuth app</span></div>
+              <div class="db-env-row"><span class="db-env-key">GITLAB_OAUTH_REDIRECT_URI</span><span class="db-env-desc">e.g. https://your-ngrok-url.ngrok-free.dev/auth/gitlab/callback</span></div>
               <div class="db-env-row"><span class="db-env-key">GITLAB_WEBHOOK_SECRET</span><span class="db-env-desc">Any random string</span></div>
-              <div class="db-env-row"><span class="db-env-key">GITLAB_URL</span><span class="db-env-desc">https://gitlab.com (or your self-hosted URL)</span></div>
             </div>
           </div>
           <div class="db-setup-step">
             <div class="db-step-num">02</div>
             <div class="db-step-title">Expose with ngrok</div>
-            <p class="db-step-desc">GitLab needs a public URL to POST webhooks.</p>
+            <p class="db-step-desc">GitLab needs a public URL to send webhooks.</p>
             <div class="db-code" id="dbc2">npx ngrok http 3000<button class="db-copy" onclick="dbCopy('dbc2')">copy</button></div>
-            <p class="db-step-desc" style="margin-top:12px">Copy the https://xxxx.ngrok.io URL into your .env as TUNNEL_URL.</p>
           </div>
           <div class="db-setup-step">
             <div class="db-step-num">03</div>
-            <div class="db-step-title">Connect a repo</div>
-            <p class="db-step-desc">Use the Get Started form. GreenAgent auto-registers <strong>both</strong> Merge Request Hook and Push Hook on your GitLab repo.</p>
-            <div class="db-code" id="dbc3">Merge Request Hook → /webhook/gitlab<br>Push Hook        → /webhook/gitlab<button class="db-copy" onclick="dbCopy('dbc3')">copy</button></div>
+            <div class="db-step-title">Login with GitLab</div>
+            <p class="db-step-desc">Click "Get Started" → "Continue with GitLab". GreenAgent registers webhooks on all your repos automatically.</p>
+            <div class="db-code" id="dbc3">MR Hook   → /webhook/gitlab<br>Push Hook → /webhook/gitlab<button class="db-copy" onclick="dbCopy('dbc3')">copy</button></div>
           </div>
           <div class="db-setup-step">
             <div class="db-step-num">04</div>
-            <div class="db-step-title">Verify connection</div>
+            <div class="db-step-title">Verify</div>
             <button class="btn-p" onclick="dbCheckHealth(true)" style="margin-bottom:16px">Run Health Check</button>
             <div id="dbHealthResult" style="color:var(--muted-text);font-size:.82rem">Click above to test.</div>
-            <div style="margin-top:18px" class="db-env-list">
-              <div class="db-env-row"><span class="db-env-key">BLOCK_THRESHOLD=40</span><span class="db-env-desc">MRs at or below this score are blocked</span></div>
-              <div class="db-env-row"><span class="db-env-key">REVIEW_THRESHOLD=65</span><span class="db-env-desc">MRs at or below this need review</span></div>
-            </div>
           </div>
         </div>
       </div>
@@ -765,40 +809,59 @@
 <!-- ══════════ GET STARTED ══════════ -->
 <div id="p-start" class="page">
   <section class="gs-page">
+
+    <!-- Login form -->
     <div class="gs-inner" id="gs-step-form">
-      <div style="font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-light);font-weight:500;margin-bottom:20px">Start today — it's free</div>
-      <h1 class="gs-t">Connect your <em>first repo</em> in 60 seconds</h1>
-      <p class="gs-s">GreenAgent auto-registers both the MR Hook and Push Hook on your GitLab repo. Every push triggers a full repo scan with a real dependency graph.</p>
-      <div class="gs-form">
-        <label class="gs-label">GitLab Namespace</label>
-        <input class="gs-input" id="gsNamespace" type="text" placeholder="e.g. rashasidique/greenagent">
-        <label class="gs-label">Work Email</label>
-        <input class="gs-input" id="gsEmail" type="email" placeholder="you@company.com" style="margin-bottom:8px">
-        <div id="gsError" style="color:#e08080;font-size:.78rem;margin-bottom:14px;display:none;padding:10px 14px;background:rgba(180,80,80,.1);border-radius:8px;border:1px solid rgba(180,80,80,.2)"></div>
-        <button class="btn-p" id="gsBtn" style="width:100%;padding:16px" onclick="gsConnect()">Connect Repository →</button>
-        <p style="text-align:center;font-size:.75rem;color:rgba(255,255,255,.2);margin-top:14px">Registers MR Hook + Push Hook automatically · No manual setup</p>
-      </div>
-      <button class="btn-gl" style="margin-top:20px" onclick="go('home')">← Back to home</button>
-    </div>
-    <div class="gs-inner" id="gs-step-success" style="display:none">
-      <div style="font-size:3rem;margin-bottom:20px">🌱</div>
-      <div style="font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-light);font-weight:500;margin-bottom:16px">Connected!</div>
-      <h1 class="gs-t" style="font-size:clamp(2rem,4vw,3rem)">GreenAgent is <em>live</em> on your repo</h1>
-      <p class="gs-s" id="gsSuccessMsg">Your repo is now connected.</p>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;text-align:left;margin-bottom:24px">
-        <div style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px">What happens next</div>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:rgba(255,255,255,.65)"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,174,138,.2);border:1px solid rgba(138,174,138,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--sage-light)">✓</div>MR Hook + Push Hook registered on your GitLab repo</div>
-          <div style="display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:rgba(255,255,255,.65)"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,174,138,.2);border:1px solid rgba(138,174,138,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--sage-light)">2</div>Push any commit — GreenAgent fetches all files & builds the real dependency graph</div>
-          <div style="display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:rgba(255,255,255,.65)"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,174,138,.2);border:1px solid rgba(138,174,138,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--sage-light)">3</div>Sustainability score + hotspot report posted on your commit</div>
-          <div style="display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:rgba(255,255,255,.65)"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,174,138,.2);border:1px solid rgba(138,174,138,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--sage-light)">4</div>Open an MR for per-diff analysis with inline score badge</div>
+      <div style="font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-light);font-weight:500;margin-bottom:20px">Free · No credit card</div>
+      <h1 class="gs-t">Connect your <em>GitLab account</em></h1>
+      <p class="gs-s">Sign in with GitLab and GreenAgent automatically registers webhooks on every repo you own — no per-repo setup, no manual config.</p>
+
+      <div id="gsError" style="color:#e08080;font-size:.78rem;margin-bottom:16px;display:none;padding:10px 14px;background:rgba(180,80,80,.1);border-radius:8px;border:1px solid rgba(180,80,80,.2)"></div>
+
+      <!-- GitLab OAuth button -->
+      <a href="/auth/gitlab" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:16px;background:#FC6D26;border:none;border-radius:100px;font-size:.95rem;font-weight:600;color:#fff;text-decoration:none;cursor:pointer;transition:all .25s;margin-bottom:16px;font-family:'DM Sans',sans-serif" onmouseover="this.style.background='#e8611a';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#FC6D26';this.style.transform='none'">
+        <svg width="20" height="20" viewBox="0 0 380 380" fill="white"><path d="M282.83,170.73l-.27-.69L191.79,8.5a8.47,8.47,0,0,0-3.52-3.71,8.38,8.38,0,0,0-10.66,2.9L116.65,105.29l-.27.62L73.37,170.73a8.45,8.45,0,0,0,0,8.57L90,205.86l16.74,26.67L190,371.5l83.26-139,16.74-26.67,16.63-26.56a8.45,8.45,0,0,0,0-8.57Z"/></svg>
+        Continue with GitLab
+      </a>
+
+      <p style="text-align:center;font-size:.72rem;color:rgba(255,255,255,.2);margin-bottom:24px">GreenAgent only requests <code style="color:rgba(255,255,255,.35)">api</code> + <code style="color:rgba(255,255,255,.35)">read_user</code> scopes</p>
+
+      <!-- What it does -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;margin-bottom:20px">
+        <div style="font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:12px">What happens after you log in</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px;font-size:.82rem;color:rgba(255,255,255,.55)"><span style="color:var(--sage-light);flex-shrink:0">①</span> GitLab gives GreenAgent your personal OAuth token</div>
+          <div style="display:flex;gap:10px;font-size:.82rem;color:rgba(255,255,255,.55)"><span style="color:var(--sage-light);flex-shrink:0">②</span> GreenAgent fetches all repos you own and registers webhooks</div>
+          <div style="display:flex;gap:10px;font-size:.82rem;color:rgba(255,255,255,.55)"><span style="color:var(--sage-light);flex-shrink:0">③</span> Every push or MR on any of your repos triggers an instant scan</div>
+          <div style="display:flex;gap:10px;font-size:.82rem;color:rgba(255,255,255,.55)"><span style="color:var(--sage-light);flex-shrink:0">④</span> New repo? Hit "Sync" and it's picked up automatically</div>
         </div>
       </div>
+
+      <button class="btn-gl" onclick="go('home')">← Back to home</button>
+    </div>
+
+    <!-- Success state (shown after OAuth redirect) -->
+    <div class="gs-inner" id="gs-step-success" style="display:none">
+      <div id="gsAvatarWrap" style="margin-bottom:16px"></div>
+      <div style="font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-light);font-weight:500;margin-bottom:16px">Logged in · All repos connected</div>
+      <h1 class="gs-t" style="font-size:clamp(2rem,4vw,3rem)">GreenAgent is <em>live</em> on your account</h1>
+      <p class="gs-s" id="gsSuccessMsg">Webhooks are being registered on all your repos now.</p>
+
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;text-align:left;margin-bottom:24px">
+        <div style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px">You're all set</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:rgba(255,255,255,.65)"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,174,138,.2);border:1px solid rgba(138,174,138,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--sage-light)">✓</div>Webhooks registered on all owned repos</div>
+          <div style="display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:rgba(255,255,255,.65)"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,174,138,.2);border:1px solid rgba(138,174,138,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--sage-light)">✓</div>Push any commit — scan starts automatically</div>
+          <div style="display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:rgba(255,255,255,.65)"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,174,138,.2);border:1px solid rgba(138,174,138,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--sage-light)">✓</div>Open a Merge Request — AI score posted as a comment</div>
+        </div>
+      </div>
+
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <button class="btn-p" onclick="go('db-overview')" style="padding:14px 28px">Open Dashboard →</button>
-        <button class="btn-gl" onclick="gsReset()">Connect another repo</button>
+        <button class="btn-gl" id="gsSyncBtn" onclick="gsSyncRepos()">↻ Sync New Repos</button>
       </div>
     </div>
+
   </section>
 </div>
 
@@ -807,21 +870,21 @@
 <script>
 const API = '';
 
-// ── PAGE ROUTER ──────────────────────────────────────────────
+// ─── PAGE ROUTER ─────────────────────────────────────────────
 let cur = null;
 function go(page) {
   if (cur) { const o = document.getElementById('p-'+cur); if(o){o.classList.remove('visible','active');} }
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.toggle('active', a.dataset.p === page));
   cur = page;
-  const next = document.getElementById('p-' + page);
+  const next = document.getElementById('p-'+page);
   if (!next) return;
   next.classList.add('active');
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
   requestAnimationFrame(() => {
     next.classList.add('visible');
     initAnim(next);
     if (page === 'home') setTimeout(runHomeEntrance, 80);
-    if (page === 'db-overview') { dbCheckHealth(); dbLoadDashboard(); dbLoadRepoAnalyses(); }
+    if (page === 'db-overview') dbNav('overview');
   });
 }
 
@@ -838,668 +901,983 @@ function runHomeEntrance() {
   setTimeout(() => { const r = document.getElementById('hr'); if(r) r.style.strokeDashoffset = '70'; }, 500);
 }
 
-// ── DASHBOARD SUB-ROUTER ─────────────────────────────────────
-function dbView(name) {
-  document.querySelectorAll('.db-view').forEach(v => v.classList.remove('active'));
+// ─── DASHBOARD NAV ───────────────────────────────────────────
+let _refreshTimer = null;
+function dbNav(name) {
+  document.querySelectorAll('.db-view').forEach(v => { v.style.display='none'; v.classList.remove('active'); });
   document.querySelectorAll('.db-link').forEach(a => a.classList.remove('active'));
-  document.getElementById('db-view-' + name).classList.add('active');
-  const lnk = document.getElementById('db-nav-' + name);
+  const el = document.getElementById('db-view-'+name);
+  if (el) { el.style.display='block'; el.classList.add('active'); }
+  const lnk = document.getElementById('db-nav-'+name);
   if (lnk) lnk.classList.add('active');
-  if (name === 'overview') { dbLoadDashboard(); dbLoadRepoAnalyses(); }
-  if (name === 'repo')     { dbLoadRepoAnalyses(); }
+  if (name !== 'detail' && GRAPH.animFrame) { cancelAnimationFrame(GRAPH.animFrame); GRAPH.animFrame = null; }
+  if (name === 'overview') {
+    dbLoadAll();
+    clearInterval(_refreshTimer);
+    _refreshTimer = setInterval(dbLoadAll, 15000);
+  } else {
+    clearInterval(_refreshTimer);
+  }
 }
 
-// ── HEALTH CHECK ─────────────────────────────────────────────
-async function dbCheckHealth(verbose = false) {
-  const dot = document.getElementById('navHDot');
-  const lbl = document.getElementById('navHLabel');
-  const wrap = document.getElementById('navHealth');
-  if (wrap) wrap.style.display = 'flex';
+async function dbLoadAll() {
+  await Promise.all([dbLoadMRAnalyses(), dbLoadRepoAnalyses()]);
   try {
-    const data = await (await fetch(API + '/api/health')).json();
-    if (dot) dot.className = 'nav-hdot ok';
-    if (lbl) lbl.textContent = 'connected';
-    if (verbose) {
-      const el = document.getElementById('dbHealthResult');
-      if (el) el.innerHTML =
-        `<div>${data.groq   ? '✅' : '❌'} Groq API key: <strong>${data.groq   ? 'configured' : 'missing'}</strong></div>` +
-        `<div>${data.gitlab ? '✅' : '❌'} GitLab token: <strong>${data.gitlab ? 'configured' : 'missing'}</strong></div>` +
-        `<div>⏱ Uptime: ${data.uptime}s</div>` +
-        `<div>${data.tunnel ? '🌐 Tunnel: '+data.tunnel : '⚠️ No tunnel URL set'}</div>`;
-    }
-  } catch {
-    if (dot) dot.className = 'nav-hdot err';
-    if (lbl) lbl.textContent = 'offline';
-    if (verbose) {
-      const el = document.getElementById('dbHealthResult');
-      if (el) el.textContent = '❌ Cannot reach server. Run: npm start';
-    }
-  }
-}
-
-// ── DASHBOARD LOAD ───────────────────────────────────────────
-async function dbLoadDashboard() {
-  try {
-    const [sRes, aRes, rsRes] = await Promise.all([
-      fetch(API + '/api/stats'),
-      fetch(API + '/api/analyses?limit=50'),
-      fetch(API + '/api/repo-stats')
-    ]);
-    dbRenderStats(await sRes.json(), await rsRes.json());
-    dbRenderTable(await aRes.json());
-  } catch {
-    dbRenderStats({ total:0, avgScore:0 }, { total:0 });
-    dbRenderTable([]);
-  }
-}
-
-function dbRenderStats(s, rs) {
-  dbSet('dbStatAvg',       s.total ? s.avgScore : '—');
-  dbSet('dbStatTotal',     s.total || '—');
-  dbSet('dbStatRepoTotal', rs.total || '—');
-  if (s.total && s.recentTrend?.length) {
-    const sp = document.getElementById('dbSpark');
-    if (sp) {
-      const max = Math.max(...s.recentTrend.map(t => t.score));
-      sp.innerHTML = [...s.recentTrend].reverse().map(t => {
-        const h = Math.round((t.score/max)*48)+4;
-        return `<div class="db-sbar${t.score>=65?' hi':''}" style="height:${h}px"></div>`;
-      }).join('');
-    }
-  }
-}
-
-function dbRenderTable(analyses) {
-  const wrap = document.getElementById('dbTableWrap');
-  if (!analyses.length) {
-    wrap.innerHTML = `<div class="db-empty"><div class="db-empty-icon">🌱</div><div class="db-empty-title">No MR analyses yet</div><div class="db-empty-sub">Open or update a MR on your connected repo.</div></div>`;
-    return;
-  }
-  const rows = analyses.map(a => {
-    const sc = a.score>=65?'ds-h':a.score>=40?'ds-m':'ds-l';
-    const vc = a.verdict==='pass'?'dv-p':a.verdict==='review'?'dv-r':'dv-b';
-    const vl = a.verdict==='pass'?'✓ Pass':a.verdict==='review'?'⚠ Review':'✕ Block';
-    const tm = a.analyzedAt ? new Date(a.analyzedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : '';
-    return `<tr>
-      <td><div class="db-score ${sc}">${a.score}</div></td>
-      <td><div class="db-mr-title">${dbEsc(a.mrTitle||'Untitled')}</div><div class="db-mr-meta">!${a.mrIid}</div></td>
-      <td><span class="db-vtag ${vc}">${vl}</span></td>
-      <td style="font-size:.78rem;color:var(--muted-text);max-width:200px">${dbEsc(a.summary||'')}</td>
-      <td style="font-size:.72rem;color:var(--muted-text)">${tm}</td>
-    </tr>`;
-  }).join('');
-  wrap.innerHTML = `<table class="db-table"><thead><tr><th>Score</th><th>MR</th><th>Verdict</th><th>Summary</th><th>Time</th></tr></thead><tbody>${rows}</tbody></table>`;
-}
-
-// ── REPO ANALYSES ────────────────────────────────────────────
-async function dbLoadRepoAnalyses() {
-  try {
-    const data = await (await fetch(API + '/api/repo-analyses?limit=20')).json();
-    renderRepoAnalyses(data);
-    if (data.length) {
-      // Update overview hotspots from latest
-      const latest = data[0];
-      dbSet('dbStatRepoScore', latest.score || '—');
-      dbSet('dbStatRepoName', latest.projectName || '—');
-      renderOverviewHotspots(latest.hotspotFiles || []);
-      updateGraphMRList(data);
-    }
+    const [s] = await Promise.all([ fetch(API+'/api/stats').then(r=>r.json()) ]);
+    dbSet('dbStatAvg',   s.total ? s.avgScore : '—');
+    dbSet('dbStatTotal', s.total || '—');
   } catch {}
 }
 
-function renderRepoAnalyses(analyses) {
-  const wrap = document.getElementById('repoAnalysesList');
-  if (!wrap) return;
+// ─── DATA ────────────────────────────────────────────────────
+async function dbLoadMRAnalyses() {
+  try {
+    const data = await fetch(API+'/api/analyses?limit=50').then(r=>r.json());
+    renderMRList(data);
+  } catch { renderMRList([]); }
+}
+
+function renderMRList(analyses) {
+  const wrap = document.getElementById('mrList');
   if (!analyses.length) {
-    wrap.innerHTML = `<div class="db-empty"><div class="db-empty-icon">🌳</div><div class="db-empty-title">No repo scans yet</div><div class="db-empty-sub">Push to a connected repo or use the manual trigger above.</div></div>`;
+    wrap.innerHTML = `<div class="db-empty"><div class="db-empty-icon">🌱</div><div class="db-empty-title">No MR analyses yet</div><div class="db-empty-sub">Open a merge request on your connected GitLab repo to trigger analysis automatically.</div></div>`;
     return;
   }
-  const cards = analyses.map(a => {
+  wrap.innerHTML = `<table class="db-table">
+    <thead><tr><th>Score</th><th>Merge Request</th><th>Verdict</th><th>Summary</th><th>Time</th></tr></thead>
+    <tbody>${analyses.map(a => {
+      const sc = a.score>=65?'ds-h':a.score>=40?'ds-m':'ds-l';
+      const vc = a.verdict==='pass'?'dv-p':a.verdict==='review'?'dv-r':'dv-b';
+      const vl = a.verdict==='pass'?'✓ Pass':a.verdict==='review'?'⚠ Review':'✕ Block';
+      const tm = a.analyzedAt ? new Date(a.analyzedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : '';
+      const k = storeObj(a);
+      return `<tr style="cursor:pointer" onclick="openDetail(getObj('${k}'),'mr')" onmouseover="this.style.background='rgba(92,122,92,.03)'" onmouseout="this.style.background=''">
+        <td><div class="db-score ${sc}">${a.score}</div></td>
+        <td><div class="db-mr-title">${dbEsc(a.mrTitle||'Untitled')}</div><div class="db-mr-meta">!${a.mrIid}</div></td>
+        <td><span class="db-vtag ${vc}">${vl}</span></td>
+        <td style="font-size:.78rem;color:var(--muted-text);max-width:220px">${dbEsc((a.summary||'').slice(0,90))}</td>
+        <td style="font-size:.72rem;color:var(--muted-text);white-space:nowrap">${tm}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+async function dbLoadRepoAnalyses() {
+  try {
+    const data = await fetch(API+'/api/repo-analyses?limit=20').then(r=>r.json());
+    renderRepoList(data);
+    if (data.length) {
+      dbSet('dbStatRepoScore', data[0].score || '—');
+      dbSet('dbStatRepoName',  data[0].projectName || '—');
+      dbSet('dbStatRepoTotal', data.length);
+    }
+  } catch { renderRepoList([]); }
+}
+
+function renderRepoList(analyses) {
+  const wrap = document.getElementById('repoList');
+  if (!analyses.length) {
+    wrap.innerHTML = `<div class="db-empty"><div class="db-empty-icon">🌳</div><div class="db-empty-title">No repo scans yet</div><div class="db-empty-sub">Push to a connected repo — GreenAgent fetches all files and builds the real import dependency graph.</div></div>`;
+    return;
+  }
+  wrap.innerHTML = analyses.map(a => {
     const sc = a.score>=65?'ds-h':a.score>=40?'ds-m':'ds-l';
     const vc = a.verdict==='pass'?'dv-p':a.verdict==='review'?'dv-r':'dv-b';
     const vl = a.verdict==='pass'?'✓ Pass':a.verdict==='review'?'⚠ Review':'✕ Block';
-    const tm = a.analyzedAt ? new Date(a.analyzedAt).toLocaleString() : '';
-    const hotspots = (a.hotspotFiles||[]).slice(0,3).map(h =>
-      `<div class="repo-hotspot"><span class="repo-hotspot-path">${dbEsc(h.path)}</span> — <span class="repo-hotspot-risk-${h.risk[0]}">${h.risk} risk</span><br><span style="color:var(--muted-text)">${dbEsc(h.reason||'')}</span></div>`
-    ).join('');
-    const hasGraph = a.dependencyGraph?.nodes?.length > 0;
-    return `<div class="repo-card" style="margin-bottom:16px">
-      <div class="repo-card-head">
-        <div>
-          <div class="repo-card-name">🌳 ${dbEsc(a.projectName||a.projectId)}</div>
-          <div class="repo-card-meta">${dbEsc(a.ref||'main')} · ${a.fileCount||0} files · ${a.dependencyGraph?.edges?.length||0} dep edges · ${tm}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px">
-          <div class="db-score ${sc}">${a.score}</div>
-          <span class="db-vtag ${vc}">${vl}</span>
-          ${hasGraph ? `<button class="btn-g" onclick='openGraphForRepo(${JSON.stringify(a).replace(/'/g,"&#39;")})' style="font-size:.72rem;padding:6px 12px">View Graph →</button>` : ''}
-        </div>
+    const tm = a.analyzedAt ? new Date(a.analyzedAt).toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+    const edges = a.dependencyGraph?.edges?.length || 0;
+    const hotCount = a.hotspotFiles?.filter(h=>h.risk==='high').length || 0;
+    const hasGraph = !!(a.dependencyGraph?.nodes?.length);
+    return `<div style="display:flex;align-items:center;gap:16px;padding:14px 20px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s"
+      onclick="openDetail(getObj('${storeObj(a)}'),'repo')"
+      onmouseover="this.style.background='rgba(92,122,92,.03)'" onmouseout="this.style.background=''">
+      <div class="db-score ${sc}" style="flex-shrink:0">${a.score}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.88rem;font-weight:500;color:var(--dark-forest)">${dbEsc(a.projectName||a.projectId)}</div>
+        <div style="font-size:.72rem;color:var(--muted-text);margin-top:2px">${dbEsc(a.ref||'main')} · ${a.fileCount||0} files · ${edges} import edges${hotCount?' · 🔥 '+hotCount+' hotspot'+(hotCount>1?'s':''):''} · ${tm}</div>
       </div>
-      <div style="font-size:.83rem;color:var(--muted-text);margin-bottom:12px;line-height:1.55">${dbEsc(a.summary||'')}</div>
-      ${hotspots}
+      <span class="db-vtag ${vc}" style="flex-shrink:0">${vl}</span>
+      ${hasGraph ? '<span style="font-size:.7rem;background:rgba(92,122,92,.1);color:var(--sage);padding:3px 10px;border-radius:100px;flex-shrink:0;font-weight:500">Graph →</span>' : ''}
     </div>`;
   }).join('');
-  wrap.innerHTML = cards;
 }
 
-function renderOverviewHotspots(hotspots) {
-  const wrap = document.getElementById('overviewHotspots');
-  if (!wrap) return;
-  if (!hotspots.length) { wrap.innerHTML = '<div style="font-size:.82rem;color:var(--muted-text)">No hotspots — repo looks healthy 🌱</div>'; return; }
-  wrap.innerHTML = hotspots.slice(0,4).map(h =>
-    `<div class="repo-hotspot" style="margin-bottom:8px"><span class="repo-hotspot-path">${dbEsc(h.path)}</span> <span class="repo-hotspot-risk-${h.risk[0]}">(${h.risk})</span><br><span style="font-size:.72rem;color:var(--muted-text)">${dbEsc(h.reason||'')}</span></div>`
-  ).join('');
-}
+// ─── OBJECT STORE (avoids inline JSON escaping issues) ───────
+const _store = {};
+let _storeIdx = 0;
+function storeObj(obj) { const k='k'+(++_storeIdx); _store[k]=obj; return k; }
+function getObj(k) { return _store[k]; }
 
-async function triggerRepoAnalysis() {
-  const projectId = document.getElementById('repoProjectId')?.value.trim();
-  if (!projectId) { dbToast('Enter a Project ID first'); return; }
-  const btn = document.getElementById('repoAnalyzeBtn');
-  btn.innerHTML = '<span class="db-spinner"></span>Starting...';
-  btn.disabled = true;
-  try {
-    const res = await fetch(API + '/api/analyze-repo', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ projectId })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error);
-    dbToast(`🌳 Repo scan started for ${data.projectName} (${data.ref}) — this takes 30-60s`);
-  } catch (err) {
-    dbToast('Error: ' + err.message);
-  } finally {
-    btn.innerHTML = 'Scan Repo Now';
-    btn.disabled = false;
+// ─── OPEN DETAIL VIEW ────────────────────────────────────────
+function openDetail(a, kind) {
+  dbNav('detail');
+  window.scrollTo(0,0);
+
+  // Title + meta
+  if (kind === 'repo') {
+    document.getElementById('detailTitle').textContent = '🌳 '+(a.projectName||a.projectId);
+    document.getElementById('detailMeta').textContent  = (a.ref||'main')+' · '+(a.fileCount||0)+' files · '+(a.dependencyGraph?.edges?.length||0)+' import edges · '+(a.analyzedAt?new Date(a.analyzedAt).toLocaleString():'');
+  } else {
+    document.getElementById('detailTitle').textContent = '🔍 '+(a.mrTitle||'MR !'+a.mrIid);
+    document.getElementById('detailMeta').textContent  = 'MR !'+a.mrIid+(a.filePaths?.length?' · '+a.filePaths.length+' files changed':'')+(a.analyzedAt?' · '+new Date(a.analyzedAt).toLocaleString():'');
   }
-}
 
-// ── ANALYZE MR ───────────────────────────────────────────────
-async function dbRunAnalysis() {
-  const projectId = document.getElementById('dbProject')?.value.trim();
-  const mrIid     = document.getElementById('dbMrIid')?.value.trim();
-  const btn       = document.getElementById('dbAnalyzeBtn');
-  const status    = document.getElementById('dbAnalyzeStatus');
-  if (!projectId || !mrIid) { dbToast('Enter both Project ID and MR IID'); return; }
-  btn.innerHTML = '<span class="db-spinner"></span>Analyzing...';
-  btn.disabled = true;
-  status.style.display = 'block';
-  status.innerHTML = '<span class="db-blink">🤖 Fetching diff and sending to Groq...</span>';
-  document.getElementById('dbResultPanel').innerHTML = `<div class="db-result"><div class="db-result-empty"><div style="width:28px;height:28px;border:2px solid rgba(255,255,255,.15);border-top-color:var(--sage-light);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px"></div><div class="db-result-empty-text">Analyzing...</div></div></div>`;
-  try {
-    const res  = await fetch(API + '/api/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ projectId, mrIid: parseInt(mrIid) }) });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error||'Failed');
-    status.innerHTML = `✅ Analyzing <strong>${dbEsc(data.mrTitle)}</strong> — result will appear below.`;
-    dbPollResult(projectId, mrIid);
-  } catch (err) {
-    status.innerHTML = `❌ ${dbEsc(err.message)}`;
-    document.getElementById('dbResultPanel').innerHTML = `<div class="db-result"><div class="db-result-empty"><div class="db-result-empty-icon">❌</div><div class="db-result-empty-text">${dbEsc(err.message)}</div></div></div>`;
-  } finally {
-    btn.innerHTML = 'Analyze MR'; btn.disabled = false;
-  }
-}
-
-async function dbPollResult(projectId, mrIid) {
-  let n = 0;
-  const iv = setInterval(async () => {
-    n++;
-    try {
-      const data = await (await fetch(API + `/api/analyses?projectId=${encodeURIComponent(projectId)}&limit=5`)).json();
-      const hit  = data.find(a => String(a.mrIid) === String(mrIid));
-      if (hit) { clearInterval(iv); dbRenderResult(hit); dbLoadDashboard(); }
-    } catch {}
-    if (n >= 15) clearInterval(iv);
-  }, 2000);
-}
-
-function dbRenderResult(a) {
-  const col    = a.score>=65?'var(--sage-light)':a.score>=40?'var(--warm-yellow-light)':'#e08080';
-  const offset = Math.round(220-(a.score/100)*220);
-  const dims   = a.dimensions||{};
-  const dimHtml = Object.entries(dims).map(([k,v]) => {
-    const c = v.score>=65?'var(--sage-light)':v.score>=40?'var(--warm-yellow-light)':'#e08080';
-    return `<div class="db-dim"><div class="db-dim-label">${k}</div><div class="db-dim-score" style="color:${c}">${v.score}/100 <span style="font-size:.62rem;opacity:.45">${v.impact}</span></div><div class="db-dim-finding">${dbEsc(v.finding)}</div></div>`;
-  }).join('');
-  const recoHtml = (a.recommendations||[]).map(r =>
-    `<div class="db-reco"><div class="db-reco-issue">${r.line?`Line ${r.line}: `:''}${dbEsc(r.issue)}</div><div class="db-reco-fix">→ ${dbEsc(r.fix)}</div></div>`
-  ).join('') || '<div style="font-size:.78rem;color:rgba(255,255,255,.35)">No specific refactors needed.</div>';
-  document.getElementById('dbResultPanel').innerHTML = `
-    <div class="db-result">
-      <div class="db-rp-score-row">
-        <div class="db-rp-ring"><svg viewBox="0 0 80 80" width="80" height="80"><circle class="rp-rt2" cx="40" cy="40" r="35"/><circle class="rp-rf2" cx="40" cy="40" r="35" stroke="${col}" style="stroke-dashoffset:${offset}"/></svg><div class="db-rp-rl"><span class="db-rp-num">${a.score}</span><span class="db-rp-unit">/100</span></div></div>
-        <div class="db-rp-info"><h4>${dbEsc(a.mrTitle||'MR !'+a.mrIid)}</h4><p>${dbEsc(a.summary||'')}</p></div>
+  // Score ring
+  const score = a.score||0;
+  const col   = score>=65?'#8AAE8A':score>=40?'#E2C85A':'#ef4444';
+  const offset= Math.round(220-(score/100)*220);
+  document.getElementById('detailScoreRing').innerHTML = `
+    <div style="position:relative;width:140px;height:140px">
+      <svg viewBox="0 0 80 80" width="140" height="140" style="transform:rotate(-90deg)">
+        <circle fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6" cx="40" cy="40" r="35"/>
+        <circle fill="none" stroke="${col}" stroke-width="6" stroke-linecap="round"
+          stroke-dasharray="220" stroke-dashoffset="220" cx="40" cy="40" r="35" id="scoreArcAnim"
+          style="transition:stroke-dashoffset 1.4s cubic-bezier(.16,1,.3,1)"/>
+      </svg>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <span style="font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:#fff;line-height:1">${score}</span>
+        <span style="font-size:.65rem;color:rgba(255,255,255,.3);margin-top:2px">/100</span>
       </div>
-      <div class="db-sec-label">Dimensions</div><div class="db-dims">${dimHtml}</div>
-      <div class="db-sec-label">Recommendations</div><div class="db-recos">${recoHtml}</div>
-      <div class="db-sec-label">6-Month Projection</div><div class="db-projection"><strong>📅</strong> ${dbEsc(a.projection||'')}</div>
     </div>`;
-}
+  setTimeout(() => { const arc=document.getElementById('scoreArcAnim'); if(arc) arc.style.strokeDashoffset=String(offset); }, 100);
 
-// ── UTILS ────────────────────────────────────────────────────
-const dbEsc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-const dbSet = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-function dbToast(msg) {
-  const el = document.getElementById('db-toast');
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 3500);
-}
-function dbCopy(id) {
-  const el = document.getElementById(id);
-  navigator.clipboard.writeText(el.innerText.replace('copy','').trim()).then(() => dbToast('Copied!'));
-}
+  // Verdict
+  const vMap = {pass:['✅ Pass','rgba(92,122,92,.3)','#8AAE8A'],review:['⚠️ Review','rgba(200,168,50,.25)','#E2C85A'],block:['🚫 Block','rgba(180,80,80,.25)','#ef4444']};
+  const [vl,vbg,vtc] = vMap[a.verdict]||vMap.review;
+  const badge = document.getElementById('detailVerdictBadge');
+  badge.textContent=vl; badge.style.cssText=`background:${vbg};color:${vtc};font-size:.82rem;font-weight:600;padding:7px 18px;border-radius:100px;display:inline-block`;
+  const topScore   = document.getElementById('detailTopScoreBadge');
+  const topVerdict = document.getElementById('detailTopVerdict');
+  if (topScore)   { topScore.textContent=score; topScore.style.color=col; }
+  if (topVerdict) { topVerdict.textContent=vl; topVerdict.style.cssText=`background:${vbg};color:${vtc};font-size:.75rem;font-weight:600;padding:4px 12px;border-radius:100px`; }
 
-// ── CONNECT FORM ─────────────────────────────────────────────
-async function gsConnect() {
-  const namespace = document.getElementById('gsNamespace')?.value.trim();
-  const email     = document.getElementById('gsEmail')?.value.trim();
-  const btn       = document.getElementById('gsBtn');
-  const errEl     = document.getElementById('gsError');
-  if (!namespace) { gsShowError('Enter your GitLab namespace'); return; }
-  if (!email)     { gsShowError('Enter your work email'); return; }
-  errEl.style.display = 'none';
-  btn.innerHTML = '<span class="db-spinner"></span>Connecting...';
-  btn.disabled  = true;
-  try {
-    const res  = await fetch(API+'/api/connect', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({namespace,email}) });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error||'Connection failed');
-    const msg = document.getElementById('gsSuccessMsg');
-    if (msg) msg.textContent = `"${data.name}" is connected. Webhook live at ${data.webhookUrl}`;
-    document.getElementById('gs-step-form').style.display    = 'none';
-    document.getElementById('gs-step-success').style.display = 'block';
-    dbToast(`🌱 ${data.namespace} connected!`);
-  } catch (err) {
-    gsShowError(err.message);
-  } finally {
-    btn.innerHTML = 'Connect Repository →'; btn.disabled = false;
+  // Meta stats
+  const metaStats = kind==='repo'
+    ? [['Files',a.fileCount||0],['Edges',a.dependencyGraph?.edges?.length||0],['Hotspots',(a.hotspotFiles||[]).filter(h=>h.risk==='high').length]]
+    : [['Files changed',(a.filePaths||[]).length],['MR','!'+a.mrIid]];
+  document.getElementById('detailScoreMeta').innerHTML = metaStats.map(([l,v])=>
+    `<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;text-align:center">
+      <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;line-height:1">${v}</div>
+      <div style="font-size:.65rem;color:rgba(255,255,255,.3);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">${l}</div>
+    </div>`).join('');
+
+  // Summary + projection
+  document.getElementById('detailSummary').textContent    = a.summary    || 'No summary available.';
+  document.getElementById('detailProjection').textContent = a.projection ? '📅 '+a.projection : 'No projection available.';
+
+  // Dimensions
+  const dims = a.dimensions||{};
+  const impactLabel = {low:'🟢 Low impact', medium:'🟡 Medium impact', high:'🔴 High impact'};
+  document.getElementById('detailDims').innerHTML = Object.keys(dims).length
+    ? Object.entries(dims).map(([k,v]) => {
+        const c   = v.score>=65?'var(--sage)':v.score>=40?'var(--warm-yellow)':'#c06060';
+        const bg  = v.score>=65?'rgba(92,122,92,.06)':v.score>=40?'rgba(200,168,50,.06)':'rgba(180,80,80,.05)';
+        const bd  = v.score>=65?'rgba(92,122,92,.15)':v.score>=40?'rgba(200,168,50,.15)':'rgba(180,80,80,.15)';
+        const imp = impactLabel[v.impact] || v.impact || '';
+        const uid = 'bar_'+k;
+        return `<div style="background:${bg};border:1px solid ${bd};border-radius:16px;padding:20px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+            <div>
+              <div style="font-size:.9rem;font-weight:700;color:var(--dark-forest);text-transform:capitalize;margin-bottom:4px">${dbEsc(k)}</div>
+              <div style="font-size:.72rem;color:${c};font-weight:500">${imp}</div>
+            </div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:${c};line-height:1">${v.score}</div>
+          </div>
+          <div style="height:8px;background:rgba(0,0,0,.08);border-radius:100px;overflow:hidden;margin-bottom:12px">
+            <div id="${uid}" style="height:100%;width:0%;background:${c};border-radius:100px;transition:width 1.3s cubic-bezier(.16,1,.3,1)"></div>
+          </div>
+          <div style="font-size:.78rem;color:var(--muted-text);line-height:1.55">${dbEsc(v.finding||'')}</div>
+        </div>`;
+      }).join('')
+    : '<div style="color:var(--muted-text);font-size:.85rem;grid-column:span 2;text-align:center;padding:20px">No dimension data available.</div>';
+  Object.keys(dims).forEach(k => { setTimeout(()=>{ const b=document.getElementById('bar_'+k); if(b) b.style.width=dims[k].score+'%'; },200); });
+
+  // Recommendations
+  const recos = a.recommendations||[];
+  document.getElementById('detailRecos').innerHTML = recos.length
+    ? recos.map((r,i)=>{
+        const loc = r.file ? `<code style="font-family:monospace;font-size:.75rem;background:rgba(92,122,92,.08);color:var(--sage);padding:2px 7px;border-radius:5px">${dbEsc(r.file)}</code>` : r.line ? `<span style="font-size:.75rem;background:var(--off-white);padding:2px 7px;border-radius:5px;color:var(--muted-text)">Line ${r.line}</span>` : '';
+        return `<div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--off-white);border-radius:14px;border-left:3px solid var(--warm-yellow)">
+          <div style="background:var(--dark-forest);color:var(--cream);font-size:.68rem;font-weight:700;padding:4px 8px;border-radius:8px;flex-shrink:0">${i+1}</div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">${loc}<span style="font-size:.85rem;font-weight:600;color:var(--dark-forest)">${dbEsc(r.issue||r.problem||'')}</span></div>
+            <div style="font-size:.82rem;color:var(--muted-text);line-height:1.6"><span style="color:var(--sage);font-weight:600">→</span> ${dbEsc(r.fix||r.suggestion||'')}</div>
+          </div></div>`;
+      }).join('')
+    : `<div style="display:flex;align-items:center;gap:10px;padding:16px;background:rgba(92,122,92,.06);border-radius:12px;border:1px solid rgba(92,122,92,.15)"><span style="font-size:1.2rem">✅</span><div><div style="font-size:.88rem;font-weight:500;color:var(--sage)">No issues found</div><div style="font-size:.78rem;color:var(--muted-text)">Code looks sustainable.</div></div></div>`;
+
+  // Hotspots (repo only)
+  const hotspotsWrap = document.getElementById('detailHotspotsWrap');
+  if (kind==='repo' && a.hotspotFiles?.length) {
+    hotspotsWrap.style.display='';
+    document.getElementById('detailHotspots').innerHTML = a.hotspotFiles.map(h=>{
+      const rc=h.risk==='high'?'#c06060':h.risk==='medium'?'var(--warm-yellow)':'var(--sage)';
+      const ri=h.risk==='high'?'🔴':h.risk==='medium'?'🟡':'🟢';
+      return `<div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--off-white);border-radius:14px;margin-bottom:10px">
+        <div style="font-size:1.1rem;flex-shrink:0">${ri}</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:5px;flex-wrap:wrap">
+            <code style="font-family:monospace;font-size:.8rem;color:var(--sage);font-weight:600;word-break:break-all">${dbEsc(h.path)}</code>
+            <span style="font-size:.7rem;font-weight:600;color:${rc};background:${rc}18;padding:3px 10px;border-radius:100px;white-space:nowrap">${h.risk} risk</span>
+          </div>
+          <div style="font-size:.8rem;color:var(--dark-forest);line-height:1.55;margin-bottom:${h.suggestion?'6px':'0'}">${dbEsc(h.reason||'')}</div>
+          ${h.suggestion?`<div style="font-size:.77rem;color:var(--muted-text)"><span style="color:var(--sage);font-weight:600">→</span> ${dbEsc(h.suggestion)}</div>`:''}
+        </div></div>`;
+    }).join('');
+  } else { hotspotsWrap.style.display='none'; }
+
+  // Dependency / impact graph — show for ALL analyses
+  const graphWrap = document.getElementById('detailGraphWrap');
+  const realGraph = a.dependencyGraph;
+
+  if (realGraph?.nodes?.length) {
+    // Repo scan: real import graph from backend
+    graphWrap.style.display = '';
+    document.getElementById('graphHeaderSublabel').textContent = 'Real Import Dependency Graph';
+    document.getElementById('graphHeaderTitle').textContent =
+      `${realGraph.nodes.length} files · ${realGraph.edges?.length||0} import edges · drag to rearrange · ⚡ incident mode`;
+    requestAnimationFrame(() => requestAnimationFrame(() => startGraph(a)));
+
+  } else if (kind === 'mr' && (a.filePaths||a.recommendations)) {
+    // MR analysis: build a synthetic graph from changed files + dimension scores
+    graphWrap.style.display = '';
+    document.getElementById('graphHeaderSublabel').textContent = 'MR Impact Graph — AI dimension scores mapped to changed files';
+    document.getElementById('graphHeaderTitle').textContent =
+      `${(a.filePaths||[]).length} changed files · 4 AI dimensions · drag to rearrange · ⚡ incident mode`;
+    const synthetic = buildSyntheticMRGraph(a);
+    const syntheticA = {...a, dependencyGraph: synthetic};
+    requestAnimationFrame(() => requestAnimationFrame(() => startGraph(syntheticA)));
+
+  } else {
+    graphWrap.style.display = 'none';
   }
 }
-function gsShowError(msg) { const el=document.getElementById('gsError'); if(el){el.textContent=msg;el.style.display='block';} }
-function gsReset() {
-  document.getElementById('gs-step-form').style.display    = 'block';
-  document.getElementById('gs-step-success').style.display = 'none';
-  ['gsNamespace','gsEmail'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-  document.getElementById('gsError').style.display = 'none';
-}
 
-// ── SSE ──────────────────────────────────────────────────────
-try {
-  const sseConn = new EventSource('/api/events');
-  sseConn.addEventListener('analysis_complete', e => {
-    const data = JSON.parse(e.data);
-    dbLoadDashboard();
-    const v = data.verdict==='pass'?'✅':data.verdict==='review'?'⚠️':'🚫';
-    dbToast(`${v} MR !${data.mrIid} scored ${data.score}/100 — ${data.verdict.toUpperCase()}`);
-  });
-  sseConn.addEventListener('repo_analysis_complete', e => {
-    const data = JSON.parse(e.data);
-    dbLoadRepoAnalyses();
-    dbLoadDashboard();
-    const v = data.verdict==='pass'?'✅':data.verdict==='review'?'⚠️':'🚫';
-    dbToast(`${v} Repo scan complete: ${data.score}/100 · ${data.nodeCount} files · ${data.edgeCount} deps`);
-  });
-  sseConn.addEventListener('repo_analyzing', e => {
-    const data = JSON.parse(e.data);
-    dbToast(`🌳 Scanning repo ${data.projectName} @ ${data.ref}...`);
-  });
-  sseConn.addEventListener('analyzing', e => {
-    const data = JSON.parse(e.data);
-    dbToast(`🔍 Analyzing MR !${data.mrIid}...`);
-  });
-  sseConn.addEventListener('repo_connected', e => {
-    const data = JSON.parse(e.data);
-    dbToast(`🌱 ${data.namespace} connected!`);
-  });
-} catch {}
+// ══════════════════════════════════════════════════════════════
+//  ENHANCED FORCE-DIRECTED DEPENDENCY GRAPH ENGINE
+// ══════════════════════════════════════════════════════════════
 
-// ════════════════════════════════════════════════════════════
-// DEPENDENCY GRAPH ENGINE
-// Real graph from actual import analysis — not fake nodes
-// ════════════════════════════════════════════════════════════
+const LAYER_COL = {
+  route:'#8B5CF6', service:'#10B981', data:'#3B82F6',
+  model:'#F59E0B', middleware:'#EC4899', entry:'#14B8A6',
+  config:'#78716C', test:'#6B7280', doc:'#9CA3AF',
+  util:'#6B7280', module:'#6B7280'
+};
 
 const GRAPH = {
   nodes:[], edges:[], canvas:null, ctx:null, W:0, H:0,
   drag:null, hovered:null, selected:null,
-  incident:false, incidentTick:0, animFrame:null, pulsePhase:0,
-  currentAnalysis:null
+  incident:false, incidentTick:0, animFrame:null, phase:0,
+  currentA:null, clustered:false,
+  _propTimer:null
 };
 
-// Layer → colour mapping (matches legend in HTML)
-const LAYER_COLORS = {
-  route:      '#8B5CF6',
-  service:    '#10B981',
-  data:       '#3B82F6',
-  model:      '#F59E0B',
-  middleware: '#EC4899',
-  entry:      '#14B8A6',
-  config:     '#78716C',
-  test:       '#6B7280',
-  doc:        '#9CA3AF',
-  static:     '#4B5563',
-  util:       '#6B7280',
-  module:     '#6B7280'
-};
+function nodeBaseCol(n) { return LAYER_COL[n.layer]||'#6B7280'; }
 
-function nodeBaseColor(n) {
-  return LAYER_COLORS[n.layer] || '#6B7280';
-}
-
-function nodeStatusColor(n) {
+function nodeDisplayCol(n) {
   if (GRAPH.incident) {
     if (n.breached) return '#ef4444';
     if (n.warning)  return '#f59e0b';
-    return '#374151';
+    if (n.isolated) return '#22c55e';
   }
-  if (n.status === 'changed')  return '#ef4444'; // hotspot
-  if (n.status === 'affected') return '#f59e0b'; // hub
-  return nodeBaseColor(n);                        // stable — use layer colour
+  if (n.status==='changed')  return '#ef4444';
+  if (n.status==='affected') return '#f59e0b';
+  if (n.status==='stable')   return '#06b6d4';
+  return nodeBaseCol(n);
 }
 
-function nodeRadius(n) {
-  return Math.max(14, Math.min(28, 14 + (n.connections || 0) * 1.5));
-}
+function nodeR(n) { return Math.max(14, Math.min(32, 14 + (n.connections||0)*2)); }
 
-function initSim(nodes) {
-  const cx = GRAPH.W/2, cy = GRAPH.H/2;
-  nodes.forEach((n,i) => {
-    const angle = (i/nodes.length)*Math.PI*2;
-    n.x  = cx + Math.cos(angle) * 200 + (Math.random()-0.5)*50;
-    n.y  = cy + Math.sin(angle) * 200 + (Math.random()-0.5)*50;
-    n.vx = 0; n.vy = 0;
-  });
-}
+// ─── SYNTHETIC GRAPH for MR analyses (no real dep graph available) ───────────
+// Builds a visual graph from changed filePaths + dimension scores + recommendations
+function buildSyntheticMRGraph(a) {
+  const files     = a.filePaths || [];
+  const dims      = a.dimensions || {};
+  const recos     = a.recommendations || [];
 
-function tickSim() {
-  const {nodes, edges} = GRAPH;
-  const cx = GRAPH.W/2, cy = GRAPH.H/2;
-  const a  = 0.09;
-  for (let i=0; i<nodes.length; i++) {
-    for (let j=i+1; j<nodes.length; j++) {
-      const dx = nodes[j].x - nodes[i].x;
-      const dy = nodes[j].y - nodes[i].y;
-      const d  = Math.sqrt(dx*dx+dy*dy)||1;
-      const f  = 4000/(d*d);
-      nodes[i].vx -= (dx/d)*f*a; nodes[i].vy -= (dy/d)*f*a;
-      nodes[j].vx += (dx/d)*f*a; nodes[j].vy += (dy/d)*f*a;
-    }
+  // Infer layer from path (same logic as backend analyzer.js)
+  function inferLayer(p) {
+    const l = p.toLowerCase();
+    if (l.includes('route') || l.includes('controller') || l.includes('handler')) return 'route';
+    if (l.includes('service') || l.includes('usecase'))  return 'service';
+    if (l.includes('model')  || l.includes('schema'))    return 'model';
+    if (l.includes('repo')   || l.includes('store') || l.includes('db')) return 'data';
+    if (l.includes('middleware') || l.includes('auth'))  return 'middleware';
+    if (l.includes('util')   || l.includes('helper'))    return 'util';
+    if (l.includes('config') || l.includes('setting'))   return 'config';
+    if (l.includes('index'))                             return 'entry';
+    return 'module';
   }
-  edges.forEach(e => {
-    const s = nodes.find(n=>n.id===e.source);
-    const t = nodes.find(n=>n.id===e.target);
-    if (!s||!t) return;
-    const dx=t.x-s.x, dy=t.y-s.y;
-    const d=Math.sqrt(dx*dx+dy*dy)||1;
-    const target=130; const f=(d-target)*0.025*a;
-    s.vx+=(dx/d)*f; s.vy+=(dy/d)*f;
-    t.vx-=(dx/d)*f; t.vy-=(dy/d)*f;
+
+  // Which files were flagged in recommendations?
+  const flaggedLines = {};
+  recos.forEach(r => { if (r.line) flaggedLines[r.line] = (r.issue||''); });
+
+  // Build nodes from changed files
+  const nodes = files.map((fp, i) => {
+    const layer = inferLayer(fp);
+    // Map dimension scores to file risk based on layer
+    const dimScore =
+      layer === 'data'       ? (dims.energy?.score       ?? 70) :
+      layer === 'service'    ? (dims.scalability?.score   ?? 70) :
+      layer === 'route'      ? (dims.architecture?.score  ?? 70) :
+      layer === 'model'      ? (dims.debt?.score          ?? 70) :
+                               Math.round((a.score || 50));
+    const status = dimScore < 40 ? 'changed' : dimScore < 65 ? 'affected' : 'stable';
+    return {
+      id:         fp,
+      label:      fp.split('/').slice(-2).join('/'),
+      layer,
+      status,
+      inDegree:   0,
+      outDegree:  0,
+      connections:0,
+      hsReason:   status === 'changed' ? `Score ${dimScore}/100 — flagged by AI` : null
+    };
   });
+
+  // Add dimension-score nodes as context rings
+  const dimNodes = Object.entries(dims).map(([name, d]) => ({
+    id:          '__dim_' + name,
+    label:       name + '\n' + d.score,
+    layer:       name === 'energy' ? 'config' : name === 'debt' ? 'model' : name === 'scalability' ? 'data' : 'service',
+    status:      d.score < 40 ? 'changed' : d.score < 65 ? 'affected' : 'stable',
+    inDegree:    0,
+    outDegree:   files.length,
+    connections: files.length,
+    hsReason:    d.finding || null
+  }));
+
+  const allNodes = [...nodes, ...dimNodes];
+
+  // Edges: each file connects to its most-relevant dimension node
+  const edges = [];
   nodes.forEach(n => {
-    if (GRAPH.drag === n) return;
-    n.vx += (cx-n.x)*0.004*a; n.vy += (cy-n.y)*0.004*a;
-    n.vx *= 0.82; n.vy *= 0.82;
-    n.x  += n.vx;  n.y  += n.vy;
-    const r = nodeRadius(n);
-    n.x = Math.max(r+8, Math.min(GRAPH.W-r-8, n.x));
-    n.y = Math.max(r+8, Math.min(GRAPH.H-r-8, n.y));
+    const dim =
+      n.layer === 'data'       ? '__dim_energy'       :
+      n.layer === 'service'    ? '__dim_scalability'  :
+      n.layer === 'route'      ? '__dim_architecture' :
+      n.layer === 'model'      ? '__dim_debt'         :
+                                 '__dim_energy';
+    if (allNodes.find(x => x.id === dim)) {
+      edges.push({ source: n.id, target: dim, weight: 0.6 });
+    }
+    // Also connect adjacent changed files to each other
+    const changed = nodes.filter(x => x.status === 'changed' && x.id !== n.id);
+    changed.slice(0, 2).forEach(c => {
+      edges.push({ source: n.id, target: c.id, weight: 0.4 });
+    });
   });
+
+  // Recompute connection counts
+  allNodes.forEach(n => {
+    n.inDegree    = edges.filter(e => e.target === n.id).length;
+    n.outDegree   = edges.filter(e => e.source === n.id).length;
+    n.connections = n.inDegree + n.outDegree;
+  });
+
+  return { nodes: allNodes, edges };
+}
+
+function startGraph(a) {
+  const g = a.dependencyGraph;
+  GRAPH.currentA  = a;
+  GRAPH.incident  = false;
+  GRAPH.clustered = false;
+
+  // Reset incident button
+  const ibtn = document.getElementById('incidentBtn');
+  if (ibtn) { ibtn.textContent='⚡ Incident Mode'; ibtn.classList.remove('incident-active'); }
+  const lbl = document.getElementById('incidentLabel');
+  if (lbl) lbl.style.display='none';
+
+  // Annotate nodes — backend already sets inDegree/outDegree/status from analyzer.js
+  // We keep those values and only recompute what's missing
+  GRAPH.nodes = (g.nodes||[]).map(n => ({...n, vx:0, vy:0, breached:false, warning:false, isolated:false}));
+  GRAPH.edges = g.edges||[];
+
+  // If inDegree/outDegree weren't set by backend, compute from edges
+  GRAPH.nodes.forEach(n => {
+    if (n.inDegree  == null) n.inDegree  = GRAPH.edges.filter(e=>e.target===n.id).length;
+    if (n.outDegree == null) n.outDegree = GRAPH.edges.filter(e=>e.source===n.id).length;
+    n.connections = (n.inDegree||0) + (n.outDegree||0);
+    // If status wasn't set, derive it from connectivity
+    if (!n.status) {
+      n.status = n.inDegree >= 5 || n.outDegree >= 6 ? 'changed'
+               : n.inDegree >= 3 ? 'affected'
+               : 'stable';
+    }
+  });
+
+  const canvas = document.getElementById('graphCanvas');
+  if (!canvas) return;
+  GRAPH.canvas = canvas;
+  GRAPH.ctx    = canvas.getContext('2d');
+  // getBoundingClientRect gives accurate dimensions even right after display:''
+  const rect = canvas.getBoundingClientRect();
+  GRAPH.W = rect.width  > 10 ? Math.round(rect.width)  : 900;
+  GRAPH.H = rect.height > 10 ? Math.round(rect.height) : 520;
+  canvas.width  = GRAPH.W;
+  canvas.height = GRAPH.H;
+
+  // Initial positions — circle spread
+  spreadCircle();
+
+  // Update stats overlay
+  const changed  = GRAPH.nodes.filter(n=>n.status==='changed').length;
+  const affected = GRAPH.nodes.filter(n=>n.status==='affected').length;
+  const statsEl  = document.getElementById('graphStatsOverlay');
+  if (statsEl) statsEl.style.display='flex';
+  dbSet('gStatNodes',    `Nodes: ${GRAPH.nodes.length}`);
+  dbSet('gStatEdges',    `Edges: ${GRAPH.edges.length}`);
+  dbSet('gStatHotspots', `Hotspots: ${changed}`);
+  dbSet('gStatBlast',    `Max blast: ${Math.round((changed+affected)/Math.max(GRAPH.nodes.length,1)*100)}%`);
+
+  // Reset inspector
+  const insp = document.getElementById('graphInspector');
+  if (insp) {
+    insp.classList.remove('highlight');
+    insp.innerHTML = `<div class="inspector-hint"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 5V7.5M7 9.5V9.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Click any node to inspect it · Drag to rearrange · ⚡ Incident Mode to simulate breach propagation</div>`;
+  }
+
+  if (GRAPH.animFrame) cancelAnimationFrame(GRAPH.animFrame);
+  drawGraph();
+}
+
+function spreadCircle() {
+  const cx=GRAPH.W/2, cy=GRAPH.H/2;
+  GRAPH.nodes.forEach((n,i) => {
+    const angle=(i/GRAPH.nodes.length)*Math.PI*2;
+    const r = 180 + (Math.random()-.5)*40;
+    n.x = cx+Math.cos(angle)*r; n.y = cy+Math.sin(angle)*r;
+    n.vx=0; n.vy=0;
+  });
+}
+
+function spreadClustered() {
+  // Group by layer
+  const layers = [...new Set(GRAPH.nodes.map(n=>n.layer))];
+  const sliceAngle = (Math.PI*2)/layers.length;
+  layers.forEach((layer,li) => {
+    const baseAngle = li*sliceAngle;
+    const cx2 = GRAPH.W/2 + Math.cos(baseAngle)*160;
+    const cy2 = GRAPH.H/2 + Math.sin(baseAngle)*130;
+    GRAPH.nodes.filter(n=>n.layer===layer).forEach((n,i2,arr) => {
+      const a2 = baseAngle + (i2/Math.max(arr.length,1))*sliceAngle*.8;
+      n.x = cx2+Math.cos(a2)*60; n.y = cy2+Math.sin(a2)*60; n.vx=0; n.vy=0;
+    });
+  });
+}
+
+function toggleLayout() {
+  GRAPH.clustered = !GRAPH.clustered;
+  const btn = document.getElementById('layoutBtn');
+  if (btn) btn.textContent = GRAPH.clustered ? '⊙ Force Layout' : '⊞ Cluster Layout';
+  GRAPH.clustered ? spreadClustered() : spreadCircle();
 }
 
 function drawGraph() {
   const {ctx,nodes,edges,W,H} = GRAPH;
   if (!ctx) return;
-  GRAPH.pulsePhase += 0.055;
+  GRAPH.phase += 0.04;
   if (GRAPH.incident) GRAPH.incidentTick++;
 
   ctx.clearRect(0,0,W,H);
-  ctx.fillStyle = '#0f1a0f'; ctx.fillRect(0,0,W,H);
 
-  // Draw edges
+  // Subtle grid background
+  ctx.fillStyle = '#0d170d';
+  ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,.025)';
+  ctx.lineWidth=1;
+  for (let x=0;x<W;x+=40) { ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke(); }
+  for (let y=0;y<H;y+=40) { ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke(); }
+
+  // ── EDGES ──
   edges.forEach(e => {
-    const s = nodes.find(n=>n.id===e.source);
-    const t = nodes.find(n=>n.id===e.target);
+    const s=nodes.find(n=>n.id===e.source);
+    const t=nodes.find(n=>n.id===e.target);
     if (!s||!t) return;
-    const w = Math.max(1, (e.weight||0.5)*3);
+    const w = Math.max(1, (e.weight||0.5)*3.5);
 
     if (GRAPH.incident && (s.breached||t.breached)) {
-      const ph = (GRAPH.incidentTick*0.05)%1;
-      const grad = ctx.createLinearGradient(s.x,s.y,t.x,t.y);
-      grad.addColorStop(Math.max(0,ph-0.2),'rgba(239,68,68,0)');
-      grad.addColorStop(ph,'rgba(239,68,68,0.9)');
-      grad.addColorStop(Math.min(1,ph+0.2),'rgba(239,68,68,0)');
-      ctx.strokeStyle = grad; ctx.lineWidth = w+1;
+      // Animated flow pulse
+      const ph = (GRAPH.incidentTick*0.055)%1;
+      const gd = ctx.createLinearGradient(s.x,s.y,t.x,t.y);
+      gd.addColorStop(0,'rgba(239,68,68,0)');
+      gd.addColorStop(Math.max(0,ph-.18),'rgba(239,68,68,0)');
+      gd.addColorStop(ph,'rgba(239,68,68,.95)');
+      gd.addColorStop(Math.min(1,ph+.18),'rgba(239,68,68,0)');
+      gd.addColorStop(1,'rgba(239,68,68,0)');
+      ctx.strokeStyle=gd; ctx.lineWidth=w+1;
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(t.x,t.y); ctx.stroke();
+      ctx.strokeStyle='rgba(239,68,68,.15)'; ctx.lineWidth=w;
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(t.x,t.y); ctx.stroke();
     } else {
-      ctx.strokeStyle = `rgba(138,174,138,0.25)`; ctx.lineWidth = w;
+      // Normal edge — colour by source layer
+      const lc = LAYER_COL[s.layer]||'#6B7280';
+      ctx.strokeStyle = `${lc}30`; ctx.lineWidth=w;
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(t.x,t.y); ctx.stroke();
     }
-    ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(t.x,t.y); ctx.stroke();
 
-    // Arrow
-    const angle = Math.atan2(t.y-s.y,t.x-s.x);
-    const ar = nodeRadius(t)+3;
-    const ax = t.x-Math.cos(angle)*ar, ay=t.y-Math.sin(angle)*ar;
-    ctx.fillStyle = GRAPH.incident&&s.breached?'rgba(239,68,68,0.7)':'rgba(138,174,138,0.35)';
+    // Arrow head
+    const ang = Math.atan2(t.y-s.y,t.x-s.x);
+    const ar  = nodeR(t)+3;
+    const ax  = t.x-Math.cos(ang)*ar, ay=t.y-Math.sin(ang)*ar;
+    ctx.fillStyle = GRAPH.incident&&s.breached ? 'rgba(239,68,68,.7)' : `${LAYER_COL[s.layer]||'#6B7280'}55`;
     ctx.beginPath();
     ctx.moveTo(ax,ay);
-    ctx.lineTo(ax-Math.cos(angle-0.45)*7, ay-Math.sin(angle-0.45)*7);
-    ctx.lineTo(ax-Math.cos(angle+0.45)*7, ay-Math.sin(angle+0.45)*7);
+    ctx.lineTo(ax-Math.cos(ang-.45)*8, ay-Math.sin(ang-.45)*8);
+    ctx.lineTo(ax-Math.cos(ang+.45)*8, ay-Math.sin(ang+.45)*8);
     ctx.closePath(); ctx.fill();
   });
 
-  // Draw nodes
+  // ── NODES ──
   nodes.forEach(n => {
-    const r   = nodeRadius(n);
-    const col = nodeStatusColor(n);
-    const ph  = GRAPH.pulsePhase;
+    const r   = nodeR(n);
+    const col = nodeDisplayCol(n);
+    const ph  = GRAPH.phase;
+    const isHov = GRAPH.hovered===n;
+    const isSel = GRAPH.selected===n;
 
-    // Incident / status halos
-    if (GRAPH.incident && n.breached) {
-      const p = 0.3+Math.sin(ph*3)*0.2;
-      ctx.beginPath(); ctx.arc(n.x,n.y,r+8+Math.sin(ph*3)*6,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(239,68,68,${p})`; ctx.lineWidth=3; ctx.stroke();
-    }
+    // Status halo
     if (!GRAPH.incident && n.status==='changed') {
-      const p = 0.2+Math.sin(ph)*0.15;
-      ctx.beginPath(); ctx.arc(n.x,n.y,r+5+Math.sin(ph)*3,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(239,68,68,${p})`; ctx.lineWidth=2; ctx.stroke();
+      const pulse = .2+Math.sin(ph)*.15;
+      ctx.beginPath(); ctx.arc(n.x,n.y,r+7+Math.sin(ph)*4,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(239,68,68,${pulse})`; ctx.lineWidth=2.5; ctx.stroke();
     }
     if (!GRAPH.incident && n.status==='affected') {
-      const p = 0.15+Math.sin(ph*0.8)*0.1;
-      ctx.beginPath(); ctx.arc(n.x,n.y,r+4,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(245,158,11,${p})`; ctx.lineWidth=2; ctx.stroke();
-    }
-    if (GRAPH.selected===n || GRAPH.hovered===n) {
-      ctx.beginPath(); ctx.arc(n.x,n.y,r+4,0,Math.PI*2);
-      ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=2; ctx.stroke();
+      ctx.beginPath(); ctx.arc(n.x,n.y,r+5,0,Math.PI*2);
+      ctx.strokeStyle='rgba(245,158,11,.2)'; ctx.lineWidth=2; ctx.stroke();
     }
 
-    // Node fill
-    const grad = ctx.createRadialGradient(n.x-r*0.3,n.y-r*0.3,0,n.x,n.y,r);
-    grad.addColorStop(0,col+'cc'); grad.addColorStop(1,col+'44');
+    // Incident halos
+    if (GRAPH.incident && n.breached) {
+      const pulse = .3+Math.sin(ph*3.5)*.25;
+      ctx.beginPath(); ctx.arc(n.x,n.y,r+8+Math.sin(ph*3.5)*6,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(239,68,68,${pulse})`; ctx.lineWidth=3; ctx.stroke();
+      ctx.beginPath(); ctx.arc(n.x,n.y,r+18+Math.sin(ph*2)*8,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(239,68,68,${pulse*.3})`; ctx.lineWidth=2; ctx.stroke();
+    }
+    if (GRAPH.incident && n.warning) {
+      const pulse = .35+Math.sin(ph*2.5)*.28;
+      ctx.beginPath(); ctx.arc(n.x,n.y,r+6+Math.sin(ph*2.5)*4,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(245,158,11,${pulse})`; ctx.lineWidth=2.5; ctx.stroke();
+    }
+
+    // Hover / select ring
+    if (isHov||isSel) {
+      ctx.beginPath(); ctx.arc(n.x,n.y,r+5,0,Math.PI*2);
+      ctx.strokeStyle=isSel?'rgba(255,255,255,.7)':'rgba(255,255,255,.4)'; ctx.lineWidth=2; ctx.stroke();
+    }
+
+    // Node fill — radial gradient
+    const grd = ctx.createRadialGradient(n.x-r*.35,n.y-r*.35,0,n.x,n.y,r);
+    grd.addColorStop(0,col+'dd'); grd.addColorStop(1,col+'44');
     ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2);
-    ctx.fillStyle=grad; ctx.fill();
-    ctx.strokeStyle=col+'aa'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.fillStyle=grd; ctx.fill();
+    ctx.strokeStyle=col+'bb'; ctx.lineWidth=1.5; ctx.stroke();
 
-    // Label (shorten to filename only)
-    const label = n.label || n.id.split('/').pop();
-    const fontSize = Math.max(8,Math.min(11,r*0.55));
-    ctx.fillStyle='rgba(255,255,255,0.9)';
-    ctx.font=`${GRAPH.selected===n?'bold ':''}${fontSize}px DM Sans,sans-serif`;
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    // Truncate long names
-    const maxW = r*2-4;
-    let txt = label;
-    ctx.measureText(txt).width > maxW && (txt = txt.slice(0,Math.floor(maxW/fontSize*1.5)-2)+'..');
-    ctx.fillText(txt, n.x, n.y);
+    // Label
+    const lbl = (n.label||n.id.split('/').pop()).slice(0,14);
+    const fs  = Math.max(8,Math.min(11,r*.6));
+    ctx.fillStyle  = isSel ? '#fff' : 'rgba(255,255,255,.88)';
+    ctx.font       = `${isSel?'bold ':''} ${fs}px DM Sans,sans-serif`;
+    ctx.textAlign  = 'center';
+    ctx.textBaseline='middle';
+    ctx.fillText(lbl,n.x,n.y);
 
-    // In-degree badge
-    if (n.inDegree >= 3) {
-      ctx.beginPath(); ctx.arc(n.x+r*0.7,n.y-r*0.7,7,0,Math.PI*2);
+    // In-degree badge (>= 3 dependents)
+    if ((n.inDegree||0) >= 3) {
+      const bx=n.x+r*.72, by=n.y-r*.72;
+      ctx.beginPath(); ctx.arc(bx,by,8,0,Math.PI*2);
       ctx.fillStyle='#1f2937'; ctx.fill();
-      ctx.strokeStyle=col; ctx.lineWidth=1; ctx.stroke();
+      ctx.strokeStyle=col+'cc'; ctx.lineWidth=1.5; ctx.stroke();
       ctx.fillStyle='#fff'; ctx.font='bold 8px sans-serif';
-      ctx.fillText(n.inDegree, n.x+r*0.7, n.y-r*0.7);
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(n.inDegree,bx,by);
     }
   });
 
-  tickSim();
+  // Incident containment perimeter
+  if (GRAPH.incident) {
+    const br = nodes.filter(n=>n.breached);
+    if (br.length>=2) {
+      const pulse = .12+Math.sin(GRAPH.phase*.6)*.08;
+      ctx.beginPath();
+      br.forEach((n,i)=>i===0?ctx.moveTo(n.x,n.y):ctx.lineTo(n.x,n.y));
+      ctx.closePath();
+      ctx.strokeStyle=`rgba(239,68,68,${pulse})`; ctx.lineWidth=2;
+      ctx.setLineDash([6,5]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle=`rgba(239,68,68,0.04)`; ctx.fill();
+    }
+  }
+
+  // ── PHYSICS TICK ──
+  const cx=GRAPH.W/2, cy=GRAPH.H/2, alpha=0.1;
+  for (let i=0;i<nodes.length;i++) {
+    for (let j=i+1;j<nodes.length;j++) {
+      const dx=nodes[j].x-nodes[i].x, dy=nodes[j].y-nodes[i].y;
+      const d=Math.sqrt(dx*dx+dy*dy)||1;
+      const f=4800/(d*d);
+      nodes[i].vx-=(dx/d)*f*alpha; nodes[i].vy-=(dy/d)*f*alpha;
+      nodes[j].vx+=(dx/d)*f*alpha; nodes[j].vy+=(dy/d)*f*alpha;
+    }
+  }
+  edges.forEach(e=>{
+    const s=nodes.find(n=>n.id===e.source), t=nodes.find(n=>n.id===e.target);
+    if (!s||!t) return;
+    const dx=t.x-s.x, dy=t.y-s.y, d=Math.sqrt(dx*dx+dy*dy)||1;
+    const target=110+(1-(e.weight||.5))*70;
+    const f=(d-target)*.028*alpha;
+    s.vx+=(dx/d)*f; s.vy+=(dy/d)*f; t.vx-=(dx/d)*f; t.vy-=(dy/d)*f;
+  });
+  nodes.forEach(n=>{
+    if (GRAPH.drag===n) return;
+    n.vx+=(cx-n.x)*.005*alpha; n.vy+=(cy-n.y)*.005*alpha;
+    n.vx*=.83; n.vy*=.83; n.x+=n.vx; n.y+=n.vy;
+    const r=nodeR(n);
+    n.x=Math.max(r+10,Math.min(GRAPH.W-r-10,n.x));
+    n.y=Math.max(r+10,Math.min(GRAPH.H-r-10,n.y));
+  });
+
   GRAPH.animFrame = requestAnimationFrame(drawGraph);
 }
 
-function openGraphForRepo(analysis) {
-  GRAPH.currentAnalysis = analysis;
-  GRAPH.incident = false;
-
-  const graph = analysis.dependencyGraph;
-  if (!graph || !graph.nodes?.length) {
-    dbToast('No dependency graph data for this analysis');
-    return;
-  }
-
-  // Deep copy nodes and edges so simulation state is fresh
-  GRAPH.nodes = graph.nodes.map(n => ({...n, vx:0, vy:0, breached:false, warning:false}));
-  GRAPH.edges = graph.edges || [];
-
-  const canvas = document.getElementById('graphCanvas');
-  GRAPH.canvas = canvas;
-  GRAPH.ctx    = canvas.getContext('2d');
-  GRAPH.W      = canvas.offsetWidth  || 800;
-  GRAPH.H      = canvas.offsetHeight || 540;
-  canvas.width  = GRAPH.W;
-  canvas.height = GRAPH.H;
-
-  initSim(GRAPH.nodes);
-
-  document.getElementById('graphTitle').textContent = `${analysis.projectName||analysis.projectId} @ ${analysis.ref||'main'} · ${GRAPH.nodes.length} files`;
-  document.getElementById('incidentBtn').style.display = 'inline-flex';
-  document.getElementById('incidentLabel').style.display = 'none';
-  document.getElementById('incidentBtn').textContent = '⚡ Incident Mode';
-
-  const hotspots = GRAPH.nodes.filter(n=>n.status==='changed').length;
-  const hubs     = GRAPH.nodes.filter(n=>n.status==='affected').length;
-  dbSet('gStatNodes',   GRAPH.nodes.length);
-  dbSet('gStatEdges',   GRAPH.edges.length);
-  dbSet('gStatChanged', hotspots);
-  dbSet('gStatAffected',hubs);
-  dbSet('gStatBlast',   hotspots+hubs > 0 ? `${Math.round((hotspots+hubs)/GRAPH.nodes.length*100)}%` : '0%');
-
-  // Analysis summary panel
-  const sc = analysis.score>=65?'#8AAE8A':analysis.score>=40?'#E2C85A':'#ef4444';
-  const vc = analysis.verdict==='pass'?'✅ Pass':analysis.verdict==='review'?'⚠️ Review':'🚫 Block';
-  document.getElementById('graphMRSummaryContent').innerHTML = `
-    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
-      <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:${sc}">${analysis.score}</div>
-      <div><div style="font-size:.82rem;font-weight:500">${vc}</div><div style="font-size:.72rem;color:var(--muted-text)">${dbEsc(analysis.summary||'')}</div></div>
-    </div>
-    <div style="font-size:.72rem;color:var(--muted-text);margin-bottom:8px">${analysis.fileCount||0} files · ${GRAPH.edges.length} import edges</div>
-    ${Object.entries(analysis.dimensions||{}).map(([k,v])=>`
-      <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:5px">
-        <span style="color:var(--muted-text)">${k}</span>
-        <span style="color:${v.score>=65?'var(--sage)':v.score>=40?'var(--warm-yellow)':'#ef4444'}">${v.score}/100</span>
-      </div>`).join('')}`;
-  document.getElementById('graphMRSummary').style.display = 'block';
-
-  if (GRAPH.animFrame) cancelAnimationFrame(GRAPH.animFrame);
-  drawGraph();
-  dbView('graph');
-}
-
-function updateGraphMRList(analyses) {
-  const list = document.getElementById('graphMRList');
-  if (!list||!analyses.length) return;
-  list.innerHTML = analyses.slice(0,6).map(a => {
-    const sc = a.score>=65?'var(--sage)':a.score>=40?'var(--warm-yellow)':'#ef4444';
-    return `<button class="btn-g" onclick='openGraphForRepo(${JSON.stringify(a).replace(/'/g,"&#39;")})' style="display:flex;align-items:center;gap:6px;font-size:.75rem;padding:8px 14px">
-      <span style="color:${sc};font-weight:700">${a.score}</span> ${dbEsc((a.projectName||'').split('/').pop())} @${dbEsc(a.ref||'main')}
-    </button>`;
-  }).join('');
-}
-
+// ── INCIDENT MODE ──────────────────────────────────────────
 function toggleIncidentMode() {
   GRAPH.incident = !GRAPH.incident;
   GRAPH.incidentTick = 0;
   const btn = document.getElementById('incidentBtn');
   const lbl = document.getElementById('incidentLabel');
   if (GRAPH.incident) {
-    btn.textContent = '🛡 Normal Mode';
-    lbl.style.display = 'block';
-    // Start from hotspot nodes
-    GRAPH.nodes.forEach(n => { n.breached = n.status==='changed'; n.warning=false; });
+    if (btn) { btn.textContent='🛡 Normal Mode'; btn.classList.add('incident-active'); }
+    if (lbl) lbl.style.display='block';
+    GRAPH.nodes.forEach(n=>{ n.breached=n.status==='changed'; n.warning=false; n.isolated=false; });
+    if (GRAPH._propTimer) clearInterval(GRAPH._propTimer);
     let step=0;
-    const iv = setInterval(() => {
+    GRAPH._propTimer = setInterval(()=>{
       step++;
-      const breached = GRAPH.nodes.filter(n=>n.breached).map(n=>n.id);
-      GRAPH.edges.forEach(e => {
-        if (breached.includes(e.source)) {
-          const t = GRAPH.nodes.find(n=>n.id===e.target);
+      const breachedIds = GRAPH.nodes.filter(n=>n.breached).map(n=>n.id);
+      GRAPH.edges.forEach(e=>{
+        if (breachedIds.includes(e.source)) {
+          const t=GRAPH.nodes.find(n=>n.id===e.target);
           if (t&&!t.breached) { if(step>3) t.breached=true; else t.warning=true; }
         }
       });
-      if (step>=8) clearInterval(iv);
-    }, 600);
+      if (step>6) {
+        GRAPH.nodes.forEach(n=>{if(!n.breached&&!n.warning) n.isolated=true;});
+        clearInterval(GRAPH._propTimer);
+        // Update blast stat
+        const br=GRAPH.nodes.filter(n=>n.breached).length;
+        dbSet('gStatBlast',`Blast: ${Math.round(br/GRAPH.nodes.length*100)}%`);
+      }
+    }, 650);
   } else {
-    btn.textContent = '⚡ Incident Mode';
-    lbl.style.display = 'none';
-    GRAPH.nodes.forEach(n => { n.breached=false; n.warning=false; });
+    if (btn) { btn.textContent='⚡ Incident Mode'; btn.classList.remove('incident-active'); }
+    if (lbl) lbl.style.display='none';
+    if (GRAPH._propTimer) clearInterval(GRAPH._propTimer);
+    GRAPH.nodes.forEach(n=>{n.breached=false;n.warning=false;n.isolated=false;});
+    dbSet('gStatBlast', `Max blast: ${Math.round((GRAPH.nodes.filter(n=>n.status==='changed').length)/GRAPH.nodes.length*100)}%`);
   }
 }
 
 function resetGraph() {
-  GRAPH.incident = false;
-  const btn = document.getElementById('incidentBtn');
-  if (btn) btn.textContent = '⚡ Incident Mode';
-  document.getElementById('incidentLabel').style.display = 'none';
-  GRAPH.nodes.forEach(n => { n.breached=false; n.warning=false; });
-  if (GRAPH.nodes.length) initSim(GRAPH.nodes);
+  GRAPH.incident=false;
+  if (GRAPH._propTimer) clearInterval(GRAPH._propTimer);
+  const btn=document.getElementById('incidentBtn');
+  if (btn) { btn.textContent='⚡ Incident Mode'; btn.classList.remove('incident-active'); }
+  const lbl=document.getElementById('incidentLabel');
+  if (lbl) lbl.style.display='none';
+  GRAPH.nodes.forEach(n=>{n.breached=false;n.warning=false;n.isolated=false;});
+  if (GRAPH.currentA) startGraph(GRAPH.currentA);
 }
 
-function showNodeDetail(node) {
-  const conns = GRAPH.edges
-    .filter(e=>e.source===node.id||e.target===node.id)
-    .map(e=>e.source===node.id?`→ ${e.target.split('/').pop()}`:` ← ${e.source.split('/').pop()}`);
-  const sc = node.status==='changed'?'#ef4444':node.status==='affected'?'#f59e0b':nodeBaseColor(node);
-  const sl = node.status==='changed'?'Hotspot (high risk)':node.status==='affected'?'Hub (many dependents)':'Stable';
-  document.getElementById('nodeDetailContent').innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-      <div style="width:12px;height:12px;border-radius:50%;background:${sc};flex-shrink:0"></div>
-      <div><div style="font-size:.88rem;font-weight:600;color:var(--dark-forest);word-break:break-all">${dbEsc(node.id)}</div><div style="font-size:.72rem;color:${sc}">${sl}</div></div>
-    </div>
-    <div style="font-size:.75rem;color:var(--muted-text);margin-bottom:4px">Layer: <strong style="color:var(--dark-forest)">${node.layer}</strong></div>
-    <div style="font-size:.75rem;color:var(--muted-text);margin-bottom:4px">In-degree (dependents): <strong style="color:var(--dark-forest)">${node.inDegree||0}</strong></div>
-    <div style="font-size:.75rem;color:var(--muted-text);margin-bottom:10px">Out-degree (imports): <strong style="color:var(--dark-forest)">${node.outDegree||0}</strong></div>
-    ${node.hsReason?`<div style="font-size:.72rem;background:rgba(212,184,74,.08);border:1px solid rgba(212,184,74,.2);border-radius:8px;padding:8px;color:var(--dark-forest);margin-bottom:8px">${dbEsc(node.hsReason)}</div>`:''}
-    ${node.hsSuggest?`<div style="font-size:.72rem;color:var(--muted-text)">→ ${dbEsc(node.hsSuggest)}</div>`:''}
-    <div style="font-size:.72rem;color:var(--muted-text);margin-bottom:6px;margin-top:8px">Connections:</div>
-    <div style="display:flex;flex-direction:column;gap:3px;max-height:120px;overflow-y:auto">
-      ${conns.slice(0,10).map(c=>`<div style="font-size:.68rem;color:var(--dark-forest);background:rgba(92,122,92,.07);padding:2px 7px;border-radius:5px;font-family:monospace">${c}</div>`).join('')}
-      ${conns.length>10?`<div style="font-size:.68rem;color:var(--muted-text)">+${conns.length-10} more</div>`:''}
+// ── NODE INSPECTOR ──────────────────────────────────────────
+function showNodeInspector(n) {
+  const insp = document.getElementById('graphInspector');
+  if (!insp) return;
+  insp.classList.add('highlight');
+  const imports    = GRAPH.edges.filter(e=>e.source===n.id).map(e=>e.target.split('/').pop());
+  const dependents = GRAPH.edges.filter(e=>e.target===n.id).map(e=>e.source.split('/').pop());
+  const col    = nodeDisplayCol(n);
+  const layCol = nodeBaseCol(n);
+  const statusLabel = n.status==='changed'?'🔴 Hotspot — high risk': n.status==='affected'?'🟡 Hub — many dependents':'🟢 Stable';
+
+  insp.innerHTML = `
+    <div style="display:grid;grid-template-columns:auto 1fr auto;gap:20px;width:100%;align-items:start">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <div style="width:12px;height:12px;border-radius:50%;background:${col};flex-shrink:0"></div>
+          <code style="font-family:monospace;font-size:.88rem;font-weight:700;color:var(--dark-forest)">${dbEsc(n.id.split('/').slice(-2).join('/'))}</code>
+          <span style="font-size:.7rem;background:${col}18;color:${col};padding:3px 10px;border-radius:100px;font-weight:600">${statusLabel}</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span style="font-size:.72rem;color:var(--muted-text)">Layer: <strong style="color:${layCol}">${n.layer||'unknown'}</strong></span>
+          ${n.hsReason?`<span style="font-size:.72rem;color:var(--muted-text)">· ${dbEsc(n.hsReason.slice(0,80))}${n.hsReason.length>80?'…':''}</span>`:''}
+        </div>
+      </div>
+      <div style="display:flex;gap:28px">
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--dark-forest)">${n.inDegree||0}</div>
+          <div style="font-size:.62rem;color:var(--muted-text);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">dependents</div>
+          <div style="font-size:.68rem;color:var(--sage)">${dependents.slice(0,3).join(', ')}${dependents.length>3?' +'+( dependents.length-3):''}</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--dark-forest)">${n.outDegree||0}</div>
+          <div style="font-size:.62rem;color:var(--muted-text);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">imports</div>
+          <div style="font-size:.68rem;color:var(--muted-text)">${imports.slice(0,3).join(', ')}${imports.length>3?' +'+( imports.length-3):''}</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--dark-forest)">${(n.inDegree||0)+(n.outDegree||0)}</div>
+          <div style="font-size:.62rem;color:var(--muted-text);text-transform:uppercase;letter-spacing:.07em">total edges</div>
+        </div>
+      </div>
+      ${n.hsSuggest?`<div style="background:rgba(92,122,92,.07);border:1px solid rgba(92,122,92,.18);border-radius:12px;padding:10px 14px;max-width:260px;font-size:.76rem;color:var(--dark-forest);line-height:1.5"><span style="color:var(--sage);font-weight:600">Suggestion: </span>${dbEsc(n.hsSuggest)}</div>`:''}
     </div>`;
 }
 
-// Canvas mouse events
+// ── CANVAS MOUSE ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('graphCanvas');
   if (!canvas) return;
+
   canvas.addEventListener('mousemove', e => {
     if (!GRAPH.nodes.length) return;
     const rect = canvas.getBoundingClientRect();
-    const scX  = GRAPH.W / rect.width;
+    const scX  = GRAPH.W/rect.width;
     const mx   = (e.clientX-rect.left)*scX;
     const my   = (e.clientY-rect.top)*scX;
-    GRAPH.hovered = GRAPH.nodes.find(n => Math.sqrt((n.x-mx)**2+(n.y-my)**2) < nodeRadius(n)) || null;
-    canvas.style.cursor = GRAPH.hovered ? 'pointer' : GRAPH.drag ? 'grabbing' : 'grab';
+    GRAPH.hovered = GRAPH.nodes.find(n=>Math.sqrt((n.x-mx)**2+(n.y-my)**2)<nodeR(n))||null;
+    canvas.style.cursor = GRAPH.hovered?'pointer':GRAPH.drag?'grabbing':'grab';
     if (GRAPH.drag) { GRAPH.drag.x=mx; GRAPH.drag.y=my; GRAPH.drag.vx=0; GRAPH.drag.vy=0; }
   });
-  canvas.addEventListener('mousedown', () => { if (GRAPH.hovered) GRAPH.drag=GRAPH.hovered; });
+
+  canvas.addEventListener('mousedown', e => {
+    if (GRAPH.hovered) { GRAPH.drag=GRAPH.hovered; e.preventDefault(); }
+  });
+
   canvas.addEventListener('mouseup', () => {
-    if (GRAPH.hovered && GRAPH.drag===GRAPH.hovered) { GRAPH.selected=GRAPH.hovered; showNodeDetail(GRAPH.hovered); }
+    if (GRAPH.hovered && GRAPH.drag===GRAPH.hovered) {
+      GRAPH.selected = GRAPH.hovered;
+      showNodeInspector(GRAPH.hovered);
+    }
     GRAPH.drag=null;
   });
+
   canvas.addEventListener('mouseleave', () => { GRAPH.drag=null; });
+
+  // Scroll-to-zoom feel (pinch on touch)
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    // Simple zoom hint: scale nodes radially from center
+    const factor = e.deltaY < 0 ? 1.08 : 0.93;
+    const cx=GRAPH.W/2, cy=GRAPH.H/2;
+    GRAPH.nodes.forEach(n=>{
+      n.x = cx+(n.x-cx)*factor;
+      n.y = cy+(n.y-cy)*factor;
+    });
+  }, {passive:false});
 });
 
-// ── BOOT ─────────────────────────────────────────────────────
+// ─── HEALTH CHECK ────────────────────────────────────────────
+async function dbCheckHealth(verbose=false) {
+  const dot=document.getElementById('navHDot'), lbl=document.getElementById('navHLabel');
+  const wrap=document.getElementById('navHealth');
+  if (wrap) wrap.style.display='flex';
+  try {
+    const d=await fetch(API+'/api/health').then(r=>r.json());
+    if (dot) dot.className='nav-hdot ok';
+    if (lbl) lbl.textContent='connected';
+    if (verbose) {
+      const el=document.getElementById('dbHealthResult');
+      if (el) el.innerHTML=`<div>${d.groq?'✅':'❌'} Groq: <strong>${d.groq?'configured':'missing'}</strong></div><div>${d.gitlab?'✅':'❌'} GitLab: <strong>${d.gitlab?'configured':'missing'}</strong></div><div>⏱ Uptime: ${d.uptime}s</div>${d.tunnel?'<div>🌐 '+d.tunnel+'</div>':'<div>⚠️ No tunnel URL</div>'}`;
+    }
+  } catch {
+    if (dot) dot.className='nav-hdot err';
+    if (lbl) lbl.textContent='offline';
+    if (verbose) { const el=document.getElementById('dbHealthResult'); if(el) el.textContent='❌ Cannot reach server. Run: npm start'; }
+  }
+}
+
+// ─── ANALYZE MR ──────────────────────────────────────────────
+async function dbRunAnalysis() {
+  const projectId=document.getElementById('dbProject')?.value.trim();
+  const mrIid=document.getElementById('dbMrIid')?.value.trim();
+  const btn=document.getElementById('dbAnalyzeBtn'), status=document.getElementById('dbAnalyzeStatus');
+  if (!projectId||!mrIid) { dbToast('Enter both Project ID and MR IID'); return; }
+  btn.innerHTML='<span class="db-spinner"></span>Analyzing...'; btn.disabled=true;
+  status.style.display='block';
+  status.innerHTML='<span class="db-blink">🤖 Fetching diff and sending to Groq...</span>';
+  document.getElementById('dbResultPanel').innerHTML=`<div style="background:var(--dark-forest);border-radius:20px;padding:48px 24px;text-align:center"><div style="width:28px;height:28px;border:2px solid rgba(255,255,255,.15);border-top-color:var(--sage-light);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px"></div><div style="font-size:.85rem;color:rgba(255,255,255,.5)">Analyzing...</div></div>`;
+  try {
+    const res=await fetch(API+'/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({projectId,mrIid:parseInt(mrIid)})});
+    const data=await res.json();
+    if (!res.ok) throw new Error(data.error||'Failed');
+    status.innerHTML=`✅ Analyzing <strong>${dbEsc(data.mrTitle)}</strong>...`;
+    dbPollResult(projectId,mrIid);
+  } catch(err) {
+    status.innerHTML=`❌ ${dbEsc(err.message)}`;
+    document.getElementById('dbResultPanel').innerHTML=`<div style="background:var(--dark-forest);border-radius:20px;padding:48px 24px;text-align:center;opacity:.6"><div style="font-size:1.5rem">❌</div><div style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:8px">${dbEsc(err.message)}</div></div>`;
+  } finally { btn.innerHTML='Analyze MR'; btn.disabled=false; }
+}
+
+async function dbPollResult(projectId,mrIid) {
+  let n=0;
+  const iv=setInterval(async()=>{
+    n++;
+    try {
+      const data=await fetch(API+`/api/analyses?projectId=${encodeURIComponent(projectId)}&limit=5`).then(r=>r.json());
+      const hit=data.find(a=>String(a.mrIid)===String(mrIid));
+      if (hit) {
+        clearInterval(iv);
+        const col=hit.score>=65?'var(--sage-light)':hit.score>=40?'var(--warm-yellow-light)':'#e08080';
+        const offset=Math.round(220-(hit.score/100)*220);
+        const dims=hit.dimensions||{};
+        document.getElementById('dbResultPanel').innerHTML=`
+          <div style="background:var(--dark-forest);border-radius:20px;padding:24px;border:1px solid rgba(255,255,255,.06)">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+              <div style="position:relative;width:70px;height:70px;flex-shrink:0">
+                <svg viewBox="0 0 80 80" width="70" height="70" style="transform:rotate(-90deg)"><circle fill="none" stroke="rgba(255,255,255,.07)" stroke-width="7" cx="40" cy="40" r="35"/><circle fill="none" stroke="${col}" stroke-width="7" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="${offset}" cx="40" cy="40" r="35"/></svg>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff">${hit.score}</div>
+              </div>
+              <div><div style="font-size:.9rem;font-weight:500;color:#fff;margin-bottom:4px">${dbEsc(hit.mrTitle||'MR !'+hit.mrIid)}</div><div style="font-size:.78rem;color:rgba(255,255,255,.45)">${dbEsc(hit.summary||'')}</div></div>
+            </div>
+            ${Object.entries(dims).map(([k,v])=>{const c=v.score>=65?'var(--sage-light)':v.score>=40?'var(--warm-yellow-light)':'#e08080';return `<div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:rgba(255,255,255,.5);text-transform:capitalize">${k}</span><span style="color:${c};font-weight:600">${v.score}/100</span></div>`;}).join('')}
+            <button onclick="openDetail(getObj('${storeObj(hit)}'),'mr')" style="margin-top:12px;width:100%;background:rgba(138,174,138,.15);border:1px solid rgba(138,174,138,.3);border-radius:10px;padding:10px;font-size:.82rem;color:var(--sage-light);cursor:pointer;font-family:'DM Sans',sans-serif">View Full Report →</button>
+          </div>`;
+        dbLoadAll();
+      }
+    } catch {}
+    if (n>=15) clearInterval(iv);
+  }, 2000);
+}
+
+// ─── REPO MANUAL TRIGGER ─────────────────────────────────────
+async function triggerRepoAnalysis() {
+  const projectId=document.getElementById('repoProjectId')?.value.trim();
+  if (!projectId) { dbToast('Enter a Project ID first'); return; }
+  const btn=document.getElementById('repoAnalyzeBtn');
+  btn.innerHTML='<span class="db-spinner"></span>'; btn.disabled=true;
+  try {
+    const res=await fetch(API+'/api/analyze-repo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({projectId})});
+    const data=await res.json();
+    if (!res.ok) throw new Error(data.error);
+    dbToast(`🌳 Scanning ${data.projectName||projectId} — takes 30-60s`);
+  } catch(err) { dbToast('Error: '+err.message); }
+  finally { btn.innerHTML='Scan Now'; btn.disabled=false; }
+}
+
+// ─── UTILS ───────────────────────────────────────────────────
+const dbEsc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const dbSet = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+function dbToast(msg) {
+  const el=document.getElementById('db-toast');
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),3500);
+}
+function dbCopy(id) {
+  const el=document.getElementById(id);
+  navigator.clipboard.writeText(el.innerText.replace('copy','').trim()).then(()=>dbToast('Copied!'));
+}
+
+// ─── OAUTH — read redirect params on page load ────────────────
+(function handleOAuthRedirect() {
+  const params = new URLSearchParams(window.location.search);
+  if (!params.get('oauth')) return;
+
+  if (params.get('oauth') === 'success') {
+    const userId   = params.get('userId');
+    const username = params.get('username');
+    const name     = params.get('name');
+    const avatar   = params.get('avatar');
+
+    // Store user session in memory
+    window._gaUser = { userId, username, name, avatar };
+
+    // Update nav to show logged-in user
+    gsShowLoggedIn({ username, name, avatar });
+
+    // Show success screen
+    if (avatar) {
+      document.getElementById('gsAvatarWrap').innerHTML =
+        `<img src="${avatar}" style="width:64px;height:64px;border-radius:50%;border:2px solid var(--sage-light)" onerror="this.style.display='none'">`;
+    }
+    document.getElementById('gsSuccessMsg').textContent =
+      `Logged in as ${name} (@${username}). Webhooks are being registered on all your repos in the background — scans will appear in the dashboard shortly.`;
+    document.getElementById('gs-step-form').style.display  = 'none';
+    document.getElementById('gs-step-success').style.display = 'block';
+
+    // Clean URL
+    window.history.replaceState({}, '', '/');
+    go('start');
+    dbToast(`🌱 Welcome, ${name}! Repos are being connected...`);
+
+  } else if (params.get('oauth') === 'error') {
+    window.history.replaceState({}, '', '/');
+    go('start');
+    setTimeout(() => {
+      const el = document.getElementById('gsError');
+      if (el) { el.textContent = 'GitLab login failed: ' + (params.get('msg') || 'unknown error'); el.style.display = 'block'; }
+    }, 300);
+  }
+})();
+
+function gsShowLoggedIn({ username, name, avatar }) {
+  // Add a small user chip to the nav if not already there
+  const nav = document.querySelector('.nav-links');
+  if (nav && !document.getElementById('navUserChip')) {
+    const li = document.createElement('li');
+    li.id = 'navUserChip';
+    li.innerHTML = `<span style="display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--muted-text);padding:6px 14px;background:rgba(92,122,92,.08);border-radius:100px">
+      ${avatar ? `<img src="${avatar}" style="width:20px;height:20px;border-radius:50%" onerror="this.style.display='none'">` : '👤'}
+      <span>${username}</span>
+    </span>`;
+    nav.appendChild(li);
+  }
+}
+
+// ─── SYNC NEW REPOS ──────────────────────────────────────────
+async function gsSyncRepos() {
+  const btn = document.getElementById('gsSyncBtn');
+  if (btn) { btn.innerHTML = '<span class="db-spinner"></span>Syncing...'; btn.disabled = true; }
+  const userId = window._gaUser?.userId;
+  try {
+    const res  = await fetch(API+'/api/sync-repos', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ userId }) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed');
+    dbToast(data.newlyAdded === 0
+      ? '✅ All repos already connected — nothing new.'
+      : `🌱 ${data.newlyAdded} new repo${data.newlyAdded===1?'':'s'} connected!`
+    );
+    dbLoadAll();
+  } catch(err) { dbToast('Sync error: ' + err.message); }
+  finally { if (btn) { btn.innerHTML = '↻ Sync New Repos'; btn.disabled = false; } }
+}
+
+function gsShowError(msg) { const el=document.getElementById('gsError'); if(el){el.textContent=msg;el.style.display='block';} }
+
+// ─── SSE ─────────────────────────────────────────────────────
+try {
+  const sse=new EventSource('/api/events');
+  sse.addEventListener('analysis_complete',e=>{
+    const d=JSON.parse(e.data);
+    dbLoadAll();
+    const v=d.verdict==='pass'?'✅':d.verdict==='review'?'⚠️':'🚫';
+    dbToast(`${v} MR !${d.mrIid} scored ${d.score}/100`);
+  });
+  sse.addEventListener('repo_analysis_complete',e=>{
+    const d=JSON.parse(e.data);
+    dbLoadAll();
+    const v=d.verdict==='pass'?'✅':d.verdict==='review'?'⚠️':'🚫';
+    dbToast(`${v} ${d.projectName||'Repo'}: ${d.score}/100 — click to view graph`);
+  });
+  sse.addEventListener('repo_analyzing',e=>{ const d=JSON.parse(e.data); dbToast(`🌳 Scanning ${d.projectName||'repo'}...`); });
+  sse.addEventListener('analyzing',e=>{ const d=JSON.parse(e.data); dbToast(`🔍 Analyzing MR !${d.mrIid}...`); });
+  sse.addEventListener('repo_connected',e=>{ const d=JSON.parse(e.data); dbToast(`🌱 ${d.namespace} connected!`); });
+} catch {}
+
+// ─── BOOT ────────────────────────────────────────────────────
 go('home');
 dbCheckHealth();
-setInterval(() => { if (cur==='db-overview') { dbLoadDashboard(); dbLoadRepoAnalyses(); } }, 15000);
 </script>
 </body>
 </html>
