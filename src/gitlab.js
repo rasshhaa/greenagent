@@ -9,15 +9,16 @@ const httpsAgent = new https.Agent({
 // ── Axios client factory ──────────────────────────────────────
 // Accepts an optional token — used for per-user OAuth tokens.
 // Falls back to server-level GITLAB_TOKEN env var.
-function gl(token) {
+function gl(token, useBearer = false) {
   const t = token || process.env.GITLAB_TOKEN;
-  // OAuth tokens (gloas-...) need Authorization: Bearer
-  // Personal access tokens (glpat-...) use PRIVATE-TOKEN header
-  const isOAuth = t && t.startsWith('gloas-');
+  // Personal access tokens start with glpat- → use PRIVATE-TOKEN
+  // Everything else (OAuth tokens) → use Bearer
+  const isPAT    = t && t.startsWith('glpat-');
+  const bearer   = useBearer || !isPAT;
   return axios.create({
     baseURL: `${process.env.GITLAB_URL || 'https://gitlab.com'}/api/v4`,
     headers: {
-      ...(isOAuth
+      ...(bearer
         ? { 'Authorization': `Bearer ${t}` }
         : { 'PRIVATE-TOKEN': t }),
       'Content-Type': 'application/json'
@@ -82,10 +83,9 @@ async function exchangeCodeForToken(code) {
 }
 
 async function getAuthenticatedUser(token) {
-  console.log('[oauth] getAuthenticatedUser token prefix:', token?.slice(0, 10) + '...');
-  console.log('[oauth] isOAuth:', token?.startsWith('gloas-'));
+  console.log('[oauth] getAuthenticatedUser with Bearer token');
   try {
-    const { data } = await gl(token).get('/user');
+    const { data } = await gl(token, true).get('/user'); // force Bearer
     return data;
   } catch (err) {
     console.error('[oauth] getAuthenticatedUser failed:', err.response?.status, err.response?.data);
@@ -117,8 +117,9 @@ async function getProjectDetails(projectId, token) {
 async function getUserProjects(token) {
   const projects = [];
   let page = 1;
+  const isOAuth = token && !token.startsWith('glpat-');
   while (true) {
-    const { data } = await gl(token).get('/projects', {
+    const { data } = await gl(token, isOAuth).get('/projects', {
       params: { owned: true, per_page: 100, page, order_by: 'last_activity_at', sort: 'desc' }
     });
     if (!data.length) break;
