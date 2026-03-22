@@ -923,7 +923,8 @@ function dbNav(name) {
 async function dbLoadAll() {
   await Promise.all([dbLoadMRAnalyses(), dbLoadRepoAnalyses()]);
   try {
-    const [s] = await Promise.all([ fetch(API+'/api/stats').then(r=>r.json()) ]);
+    const uid = window._gaUser?.userId || '';
+    const [s] = await Promise.all([ fetch(API+`/api/stats?userId=${uid}`).then(r=>r.json()) ]);
     dbSet('dbStatAvg',   s.total ? s.avgScore : '—');
     dbSet('dbStatTotal', s.total || '—');
   } catch {}
@@ -932,7 +933,8 @@ async function dbLoadAll() {
 // ─── DATA ────────────────────────────────────────────────────
 async function dbLoadMRAnalyses() {
   try {
-    const data = await fetch(API+'/api/analyses?limit=50').then(r=>r.json());
+    const uid = window._gaUser?.userId || '';
+    const data = await fetch(API+`/api/analyses?limit=50&userId=${uid}`).then(r=>r.json());
     renderMRList(data);
   } catch { renderMRList([]); }
 }
@@ -963,7 +965,8 @@ function renderMRList(analyses) {
 
 async function dbLoadRepoAnalyses() {
   try {
-    const data = await fetch(API+'/api/repo-analyses?limit=20').then(r=>r.json());
+    const uid = window._gaUser?.userId || '';
+    const data = await fetch(API+`/api/repo-analyses?limit=20&userId=${uid}`).then(r=>r.json());
     renderRepoList(data);
     if (data.length) {
       dbSet('dbStatRepoScore', data[0].score || '—');

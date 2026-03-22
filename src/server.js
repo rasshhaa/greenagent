@@ -308,7 +308,11 @@ async function processMR({ projectId, mrIid, mrTitle, mrDescription, token }) {
   console.log(`✅ [MR] Score: ${analysis.score}/100 — ${analysis.verdict.toUpperCase()}`);
 
   await postMRComment(projectId, mrIid, analysis, token);
-  const saved = store.save({ projectId, mrIid, mrTitle, filePaths, ...analysis });
+
+  // Look up userId from repo so we can filter by user later
+  const repo   = store.listRepos().find(r => String(r.projectId) === String(projectId));
+  const userId = repo?.userId;
+  const saved  = store.save({ projectId, mrIid, mrTitle, filePaths, userId, ...analysis });
 
   broadcast('analysis_complete', { kind: 'mr', ...saved, stats: store.stats() });
 }
@@ -347,7 +351,10 @@ async function processRepo({ projectId, projectName, ref, commitSha, token }) {
     console.warn(`[repo] Could not post commit comment: ${err.message}`);
   }
 
-  const saved = store.saveRepoAnalysis({ projectId, projectName, ref, commitSha, fileCount: files.length, ...analysis });
+  // Look up userId from repo
+  const repo   = store.listRepos().find(r => String(r.projectId) === String(projectId));
+  const userId = repo?.userId;
+  const saved  = store.saveRepoAnalysis({ projectId, projectName, ref, commitSha, fileCount: files.length, userId, ...analysis });
 
   broadcast('repo_analysis_complete', {
     kind: 'repo', id: saved.id, projectId, projectName, ref,
@@ -380,9 +387,33 @@ function prioritiseFiles(tree, limit) {
 // ─────────────────────────────────────────────────────────────
 // REST API
 // ─────────────────────────────────────────────────────────────
-app.get('/api/analyses',         (req, res) => res.json(store.list({ limit: parseInt(req.query.limit)||50, projectId: req.query.projectId })));
-app.get('/api/stats',            (req, res) => res.json(store.stats()));
-app.get('/api/repo-analyses',    (req, res) => res.json(store.listRepoAnalyses({ limit: parseInt(req.query.limit)||20, projectId: req.query.projectId })));
+app.get('/api/analyses', async (req, res) => {
+  const { limit, projectId, userId } = req.query;
+  let data = store.list({ limit: parseInt(limit)||50, projectId });
+  if (userId) data = data.filter(a => String(a.userId) === String(userId));
+  res.json(data);
+});
+app.get('/api/stats', async (req, res) => {
+  const { userId } = req.query;
+  if (userId) {
+    const all = store.list({ limit: 200 }).filter(a => String(a.userId) === String(userId));
+    if (!all.length) return res.json({ total:0, avgScore:0, passCount:0, reviewCount:0, blockCount:0, recentTrend:[] });
+    const avg = Math.round(all.reduce((s,a) => s+a.score, 0) / all.length);
+    return res.json({ total:all.length, avgScore:avg,
+      passCount:   all.filter(a=>a.verdict==='pass').length,
+      reviewCount: all.filter(a=>a.verdict==='review').length,
+      blockCount:  all.filter(a=>a.verdict==='block').length,
+      recentTrend: all.slice(0,10).map(a=>({score:a.score,at:a.analyzedAt}))
+    });
+  }
+  res.json(store.stats());
+});
+app.get('/api/repo-analyses', async (req, res) => {
+  const { limit, projectId, userId } = req.query;
+  let data = store.listRepoAnalyses({ limit: parseInt(limit)||20, projectId });
+  if (userId) data = data.filter(a => String(a.userId) === String(userId));
+  res.json(data);
+});
 app.get('/api/repo-stats',       (req, res) => res.json(store.repoStats()));
 app.get('/api/repos',            (req, res) => res.json(store.listRepos()));
 
