@@ -51,6 +51,8 @@ async function exchangeCodeForToken(code) {
   };
   try {
     const { data } = await axios.post(`${base}/oauth/token`, payload);
+    console.log('[oauth] token_type:', data.token_type);
+    console.log('[oauth] token prefix:', data.access_token?.slice(0, 10) + '...');
     return data;
   } catch (err) {
     console.error('[oauth] token exchange failed:', err.response?.status, JSON.stringify(err.response?.data));
@@ -58,12 +60,16 @@ async function exchangeCodeForToken(code) {
   }
 }
 
-/**
- * Get the currently authenticated user's profile.
- */
 async function getAuthenticatedUser(token) {
-  const { data } = await gl(token).get('/user');
-  return data; // { id, username, name, email, avatar_url, ... }
+  console.log('[oauth] getAuthenticatedUser token prefix:', token?.slice(0, 10) + '...');
+  console.log('[oauth] isOAuth:', token?.startsWith('gloas-'));
+  try {
+    const { data } = await gl(token).get('/user');
+    return data;
+  } catch (err) {
+    console.error('[oauth] getAuthenticatedUser failed:', err.response?.status, err.response?.data);
+    throw err;
+  }
 }
 
 // ── MR helpers ────────────────────────────────────────────────
