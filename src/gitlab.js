@@ -1,4 +1,10 @@
 const axios = require('axios');
+const https = require('https');
+
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: true,
+  keepAlive: false
+});
 
 // ── Axios client factory ──────────────────────────────────────
 // Accepts an optional token — used for per-user OAuth tokens.
@@ -42,6 +48,7 @@ async function exchangeCodeForToken(code) {
   const base = process.env.GITLAB_URL || 'https://gitlab.com';
   console.log('[oauth] redirect_uri being sent:', process.env.GITLAB_OAUTH_REDIRECT_URI);
   console.log('[oauth] client_id being sent:', process.env.GITLAB_OAUTH_CLIENT_ID?.slice(0, 10) + '...');
+
   const payload = {
     client_id:     process.env.GITLAB_OAUTH_CLIENT_ID,
     client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
@@ -49,14 +56,28 @@ async function exchangeCodeForToken(code) {
     grant_type:    'authorization_code',
     redirect_uri:  process.env.GITLAB_OAUTH_REDIRECT_URI
   };
-  try {
-    const { data } = await axios.post(`${base}/oauth/token`, payload);
-    console.log('[oauth] token_type:', data.token_type);
-    console.log('[oauth] token prefix:', data.access_token?.slice(0, 10) + '...');
-    return data;
-  } catch (err) {
-    console.error('[oauth] token exchange failed:', err.response?.status, JSON.stringify(err.response?.data));
-    throw err;
+
+  // Retry up to 3 times — TLS drops are transient on Render
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      console.log(`[oauth] token exchange attempt ${attempt}...`);
+      const { data } = await axios.post(`${base}/oauth/token`, payload, {
+        httpsAgent,
+        timeout: 15000
+      });
+      console.log('[oauth] token_type:', data.token_type);
+      console.log('[oauth] token prefix:', data.access_token?.slice(0, 10) + '...');
+      return data;
+    } catch (err) {
+      const isTLS = err.message?.includes('socket disconnected') || err.message?.includes('TLS') || err.code === 'ECONNRESET';
+      console.error(`[oauth] attempt ${attempt} failed:`, err.response?.status || err.message);
+      if (attempt === 3 || !isTLS) {
+        console.error('[oauth] token exchange final error:', err.response?.data || err.message);
+        throw err;
+      }
+      // Wait 1s before retry
+      await new Promise(r => setTimeout(r, 1000));
+    }
   }
 }
 
